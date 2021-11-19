@@ -13,21 +13,9 @@ export type Scalars = {
   Int: number;
   Float: number;
   timestamptz: any;
+  uuid: any;
 };
 
-
-/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-export type Int_Comparison_Exp = {
-  _eq?: Maybe<Scalars['Int']>;
-  _gt?: Maybe<Scalars['Int']>;
-  _gte?: Maybe<Scalars['Int']>;
-  _in?: Maybe<Array<Scalars['Int']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['Int']>;
-  _lte?: Maybe<Scalars['Int']>;
-  _neq?: Maybe<Scalars['Int']>;
-  _nin?: Maybe<Array<Scalars['Int']>>;
-};
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
@@ -65,113 +53,183 @@ export type String_Comparison_Exp = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
-  /** delete data from the table: "users" */
-  delete_users?: Maybe<Users_Mutation_Response>;
-  /** delete single row from the table: "users" */
-  delete_users_by_pk?: Maybe<Users>;
-  /** delete data from the table: "videos" */
-  delete_videos?: Maybe<Videos_Mutation_Response>;
-  /** delete single row from the table: "videos" */
-  delete_videos_by_pk?: Maybe<Videos>;
-  /** insert data into the table: "users" */
-  insert_users?: Maybe<Users_Mutation_Response>;
-  /** insert a single row into the table: "users" */
-  insert_users_one?: Maybe<Users>;
-  /** insert data into the table: "videos" */
-  insert_videos?: Maybe<Videos_Mutation_Response>;
-  /** insert a single row into the table: "videos" */
-  insert_videos_one?: Maybe<Videos>;
-  /** update data of the table: "users" */
-  update_users?: Maybe<Users_Mutation_Response>;
-  /** update single row of the table: "users" */
-  update_users_by_pk?: Maybe<Users>;
-  /** update data of the table: "videos" */
-  update_videos?: Maybe<Videos_Mutation_Response>;
-  /** update single row of the table: "videos" */
-  update_videos_by_pk?: Maybe<Videos>;
+  /** delete data from the table: "objectives" */
+  delete_objectives?: Maybe<Objectives_Mutation_Response>;
+  /** delete single row from the table: "objectives" */
+  delete_objectives_by_pk?: Maybe<Objectives>;
+  /** insert data into the table: "objectives" */
+  insert_objectives?: Maybe<Objectives_Mutation_Response>;
+  /** insert a single row into the table: "objectives" */
+  insert_objectives_one?: Maybe<Objectives>;
+  /** update data of the table: "objectives" */
+  update_objectives?: Maybe<Objectives_Mutation_Response>;
+  /** update single row of the table: "objectives" */
+  update_objectives_by_pk?: Maybe<Objectives>;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_UsersArgs = {
-  where: Users_Bool_Exp;
+export type Mutation_RootDelete_ObjectivesArgs = {
+  where: Objectives_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Users_By_PkArgs = {
-  id: Scalars['String'];
+export type Mutation_RootDelete_Objectives_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_VideosArgs = {
-  where: Videos_Bool_Exp;
+export type Mutation_RootInsert_ObjectivesArgs = {
+  objects: Array<Objectives_Insert_Input>;
+  on_conflict?: Maybe<Objectives_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Videos_By_PkArgs = {
-  id: Scalars['String'];
+export type Mutation_RootInsert_Objectives_OneArgs = {
+  object: Objectives_Insert_Input;
+  on_conflict?: Maybe<Objectives_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_UsersArgs = {
-  objects: Array<Users_Insert_Input>;
-  on_conflict?: Maybe<Users_On_Conflict>;
+export type Mutation_RootUpdate_ObjectivesArgs = {
+  _set?: Maybe<Objectives_Set_Input>;
+  where: Objectives_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Users_OneArgs = {
-  object: Users_Insert_Input;
-  on_conflict?: Maybe<Users_On_Conflict>;
+export type Mutation_RootUpdate_Objectives_By_PkArgs = {
+  _set?: Maybe<Objectives_Set_Input>;
+  pk_columns: Objectives_Pk_Columns_Input;
+};
+
+/** columns and relationships of "objectives" */
+export type Objectives = {
+  __typename?: 'objectives';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['uuid'];
+  title: Scalars['String'];
+};
+
+/** aggregated selection of "objectives" */
+export type Objectives_Aggregate = {
+  __typename?: 'objectives_aggregate';
+  aggregate?: Maybe<Objectives_Aggregate_Fields>;
+  nodes: Array<Objectives>;
+};
+
+/** aggregate fields of "objectives" */
+export type Objectives_Aggregate_Fields = {
+  __typename?: 'objectives_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Objectives_Max_Fields>;
+  min?: Maybe<Objectives_Min_Fields>;
 };
 
 
-/** mutation root */
-export type Mutation_RootInsert_VideosArgs = {
-  objects: Array<Videos_Insert_Input>;
-  on_conflict?: Maybe<Videos_On_Conflict>;
+/** aggregate fields of "objectives" */
+export type Objectives_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Objectives_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
 };
 
-
-/** mutation root */
-export type Mutation_RootInsert_Videos_OneArgs = {
-  object: Videos_Insert_Input;
-  on_conflict?: Maybe<Videos_On_Conflict>;
+/** Boolean expression to filter rows from the table "objectives". All fields are combined with a logical 'AND'. */
+export type Objectives_Bool_Exp = {
+  _and?: Maybe<Array<Objectives_Bool_Exp>>;
+  _not?: Maybe<Objectives_Bool_Exp>;
+  _or?: Maybe<Array<Objectives_Bool_Exp>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
 };
 
+/** unique or primary key constraints on table "objectives" */
+export enum Objectives_Constraint {
+  /** unique or primary key constraint */
+  ObjectivesPkey = 'objectives_pkey'
+}
 
-/** mutation root */
-export type Mutation_RootUpdate_UsersArgs = {
-  _set?: Maybe<Users_Set_Input>;
-  where: Users_Bool_Exp;
+/** input type for inserting data into table "objectives" */
+export type Objectives_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
 };
 
-
-/** mutation root */
-export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _set?: Maybe<Users_Set_Input>;
-  pk_columns: Users_Pk_Columns_Input;
+/** aggregate max on columns */
+export type Objectives_Max_Fields = {
+  __typename?: 'objectives_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
 };
 
-
-/** mutation root */
-export type Mutation_RootUpdate_VideosArgs = {
-  _inc?: Maybe<Videos_Inc_Input>;
-  _set?: Maybe<Videos_Set_Input>;
-  where: Videos_Bool_Exp;
+/** aggregate min on columns */
+export type Objectives_Min_Fields = {
+  __typename?: 'objectives_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
 };
 
-
-/** mutation root */
-export type Mutation_RootUpdate_Videos_By_PkArgs = {
-  _inc?: Maybe<Videos_Inc_Input>;
-  _set?: Maybe<Videos_Set_Input>;
-  pk_columns: Videos_Pk_Columns_Input;
+/** response of any mutation on the table "objectives" */
+export type Objectives_Mutation_Response = {
+  __typename?: 'objectives_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Objectives>;
 };
+
+/** on conflict condition type for table "objectives" */
+export type Objectives_On_Conflict = {
+  constraint: Objectives_Constraint;
+  update_columns?: Array<Objectives_Update_Column>;
+  where?: Maybe<Objectives_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "objectives". */
+export type Objectives_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: objectives */
+export type Objectives_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "objectives" */
+export enum Objectives_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title'
+}
+
+/** input type for updating data in table "objectives" */
+export type Objectives_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "objectives" */
+export enum Objectives_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title'
+}
 
 /** column ordering options */
 export enum Order_By {
@@ -191,126 +249,68 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "videos" */
-  videos: Array<Videos>;
-  /** fetch aggregated fields from the table: "videos" */
-  videos_aggregate: Videos_Aggregate;
-  /** fetch data from the table: "videos" using primary key columns */
-  videos_by_pk?: Maybe<Videos>;
+  /** fetch data from the table: "objectives" */
+  objectives: Array<Objectives>;
+  /** fetch aggregated fields from the table: "objectives" */
+  objectives_aggregate: Objectives_Aggregate;
+  /** fetch data from the table: "objectives" using primary key columns */
+  objectives_by_pk?: Maybe<Objectives>;
 };
 
 
-export type Query_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Query_RootObjectivesArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
 };
 
 
-export type Query_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Query_RootObjectives_AggregateArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
 };
 
 
-export type Query_RootUsers_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
-export type Query_RootVideosArgs = {
-  distinct_on?: Maybe<Array<Videos_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Videos_Order_By>>;
-  where?: Maybe<Videos_Bool_Exp>;
-};
-
-
-export type Query_RootVideos_AggregateArgs = {
-  distinct_on?: Maybe<Array<Videos_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Videos_Order_By>>;
-  where?: Maybe<Videos_Bool_Exp>;
-};
-
-
-export type Query_RootVideos_By_PkArgs = {
-  id: Scalars['String'];
+export type Query_RootObjectives_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "videos" */
-  videos: Array<Videos>;
-  /** fetch aggregated fields from the table: "videos" */
-  videos_aggregate: Videos_Aggregate;
-  /** fetch data from the table: "videos" using primary key columns */
-  videos_by_pk?: Maybe<Videos>;
+  /** fetch data from the table: "objectives" */
+  objectives: Array<Objectives>;
+  /** fetch aggregated fields from the table: "objectives" */
+  objectives_aggregate: Objectives_Aggregate;
+  /** fetch data from the table: "objectives" using primary key columns */
+  objectives_by_pk?: Maybe<Objectives>;
 };
 
 
-export type Subscription_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Subscription_RootObjectivesArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
 };
 
 
-export type Subscription_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Subscription_RootObjectives_AggregateArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
 };
 
 
-export type Subscription_RootUsers_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
-export type Subscription_RootVideosArgs = {
-  distinct_on?: Maybe<Array<Videos_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Videos_Order_By>>;
-  where?: Maybe<Videos_Bool_Exp>;
-};
-
-
-export type Subscription_RootVideos_AggregateArgs = {
-  distinct_on?: Maybe<Array<Videos_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Videos_Order_By>>;
-  where?: Maybe<Videos_Bool_Exp>;
-};
-
-
-export type Subscription_RootVideos_By_PkArgs = {
-  id: Scalars['String'];
+export type Subscription_RootObjectives_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -327,439 +327,64 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
-/** columns and relationships of "users" */
-export type Users = {
-  __typename?: 'users';
-  created_at: Scalars['timestamptz'];
-  id: Scalars['String'];
-  name: Scalars['String'];
-  profile_photo_url: Scalars['String'];
-  updated_at: Scalars['timestamptz'];
+
+/** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: Maybe<Scalars['uuid']>;
+  _gt?: Maybe<Scalars['uuid']>;
+  _gte?: Maybe<Scalars['uuid']>;
+  _in?: Maybe<Array<Scalars['uuid']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['uuid']>;
+  _lte?: Maybe<Scalars['uuid']>;
+  _neq?: Maybe<Scalars['uuid']>;
+  _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-/** aggregated selection of "users" */
-export type Users_Aggregate = {
-  __typename?: 'users_aggregate';
-  aggregate?: Maybe<Users_Aggregate_Fields>;
-  nodes: Array<Users>;
-};
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_Fields = {
-  __typename?: 'users_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Users_Max_Fields>;
-  min?: Maybe<Users_Min_Fields>;
-};
+export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-/** aggregate fields of "users" */
-export type Users_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Users_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
-export type Users_Bool_Exp = {
-  _and?: Maybe<Array<Users_Bool_Exp>>;
-  _not?: Maybe<Users_Bool_Exp>;
-  _or?: Maybe<Array<Users_Bool_Exp>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  profile_photo_url?: Maybe<String_Comparison_Exp>;
-  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "users" */
-export enum Users_Constraint {
-  /** unique or primary key constraint */
-  UsersPkey = 'users_pkey'
-}
-
-/** input type for inserting data into table "users" */
-export type Users_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  profile_photo_url?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate max on columns */
-export type Users_Max_Fields = {
-  __typename?: 'users_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  profile_photo_url?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate min on columns */
-export type Users_Min_Fields = {
-  __typename?: 'users_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  profile_photo_url?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** response of any mutation on the table "users" */
-export type Users_Mutation_Response = {
-  __typename?: 'users_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Users>;
-};
-
-/** on conflict condition type for table "users" */
-export type Users_On_Conflict = {
-  constraint: Users_Constraint;
-  update_columns?: Array<Users_Update_Column>;
-  where?: Maybe<Users_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "users". */
-export type Users_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  profile_photo_url?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: users */
-export type Users_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "users" */
-export enum Users_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  ProfilePhotoUrl = 'profile_photo_url',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "users" */
-export type Users_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  profile_photo_url?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** update columns of table "users" */
-export enum Users_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  ProfilePhotoUrl = 'profile_photo_url',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** columns and relationships of "videos" */
-export type Videos = {
-  __typename?: 'videos';
-  created_at: Scalars['timestamptz'];
-  description: Scalars['String'];
-  duration: Scalars['Int'];
-  id: Scalars['String'];
-  owner_id: Scalars['String'];
-  title: Scalars['String'];
-  updated_at: Scalars['timestamptz'];
-  video_url: Scalars['String'];
-};
-
-/** aggregated selection of "videos" */
-export type Videos_Aggregate = {
-  __typename?: 'videos_aggregate';
-  aggregate?: Maybe<Videos_Aggregate_Fields>;
-  nodes: Array<Videos>;
-};
-
-/** aggregate fields of "videos" */
-export type Videos_Aggregate_Fields = {
-  __typename?: 'videos_aggregate_fields';
-  avg?: Maybe<Videos_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Videos_Max_Fields>;
-  min?: Maybe<Videos_Min_Fields>;
-  stddev?: Maybe<Videos_Stddev_Fields>;
-  stddev_pop?: Maybe<Videos_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Videos_Stddev_Samp_Fields>;
-  sum?: Maybe<Videos_Sum_Fields>;
-  var_pop?: Maybe<Videos_Var_Pop_Fields>;
-  var_samp?: Maybe<Videos_Var_Samp_Fields>;
-  variance?: Maybe<Videos_Variance_Fields>;
-};
-
-
-/** aggregate fields of "videos" */
-export type Videos_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Videos_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** aggregate avg on columns */
-export type Videos_Avg_Fields = {
-  __typename?: 'videos_avg_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "videos". All fields are combined with a logical 'AND'. */
-export type Videos_Bool_Exp = {
-  _and?: Maybe<Array<Videos_Bool_Exp>>;
-  _not?: Maybe<Videos_Bool_Exp>;
-  _or?: Maybe<Array<Videos_Bool_Exp>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  description?: Maybe<String_Comparison_Exp>;
-  duration?: Maybe<Int_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  owner_id?: Maybe<String_Comparison_Exp>;
-  title?: Maybe<String_Comparison_Exp>;
-  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
-  video_url?: Maybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "videos" */
-export enum Videos_Constraint {
-  /** unique or primary key constraint */
-  VideosPkey = 'videos_pkey'
-}
-
-/** input type for incrementing numeric columns in table "videos" */
-export type Videos_Inc_Input = {
-  duration?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "videos" */
-export type Videos_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
-  duration?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  owner_id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  video_url?: Maybe<Scalars['String']>;
-};
-
-/** aggregate max on columns */
-export type Videos_Max_Fields = {
-  __typename?: 'videos_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
-  duration?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  owner_id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  video_url?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Videos_Min_Fields = {
-  __typename?: 'videos_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
-  duration?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  owner_id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  video_url?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "videos" */
-export type Videos_Mutation_Response = {
-  __typename?: 'videos_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Videos>;
-};
-
-/** on conflict condition type for table "videos" */
-export type Videos_On_Conflict = {
-  constraint: Videos_Constraint;
-  update_columns?: Array<Videos_Update_Column>;
-  where?: Maybe<Videos_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "videos". */
-export type Videos_Order_By = {
-  created_at?: Maybe<Order_By>;
-  description?: Maybe<Order_By>;
-  duration?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  owner_id?: Maybe<Order_By>;
-  title?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-  video_url?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: videos */
-export type Videos_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "videos" */
-export enum Videos_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Description = 'description',
-  /** column name */
-  Duration = 'duration',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  OwnerId = 'owner_id',
-  /** column name */
-  Title = 'title',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  VideoUrl = 'video_url'
-}
-
-/** input type for updating data in table "videos" */
-export type Videos_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
-  duration?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  owner_id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  video_url?: Maybe<Scalars['String']>;
-};
-
-/** aggregate stddev on columns */
-export type Videos_Stddev_Fields = {
-  __typename?: 'videos_stddev_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Videos_Stddev_Pop_Fields = {
-  __typename?: 'videos_stddev_pop_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Videos_Stddev_Samp_Fields = {
-  __typename?: 'videos_stddev_samp_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate sum on columns */
-export type Videos_Sum_Fields = {
-  __typename?: 'videos_sum_fields';
-  duration?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "videos" */
-export enum Videos_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Description = 'description',
-  /** column name */
-  Duration = 'duration',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  OwnerId = 'owner_id',
-  /** column name */
-  Title = 'title',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  VideoUrl = 'video_url'
-}
-
-/** aggregate var_pop on columns */
-export type Videos_Var_Pop_Fields = {
-  __typename?: 'videos_var_pop_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Videos_Var_Samp_Fields = {
-  __typename?: 'videos_var_samp_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Videos_Variance_Fields = {
-  __typename?: 'videos_variance_fields';
-  duration?: Maybe<Scalars['Float']>;
-};
-
-export type SelectAllUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SelectAllUserQuery = (
+export type MyQueryQuery = (
   { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'name' | 'profile_photo_url' | 'created_at' | 'updated_at'>
+  & { objectives: Array<(
+    { __typename?: 'objectives' }
+    & Pick<Objectives, 'id' | 'title'>
   )> }
 );
 
 
-export const SelectAllUserDocument = gql`
-    query selectAllUser {
-  users {
+export const MyQueryDocument = gql`
+    query MyQuery {
+  objectives {
     id
-    name
-    profile_photo_url
-    created_at
-    updated_at
+    title
   }
 }
     `;
 
 /**
- * __useSelectAllUserQuery__
+ * __useMyQueryQuery__
  *
- * To run a query within a React component, call `useSelectAllUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useSelectAllUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMyQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSelectAllUserQuery({
+ * const { data, loading, error } = useMyQueryQuery({
  *   variables: {
  *   },
  * });
  */
-export function useSelectAllUserQuery(baseOptions?: Apollo.QueryHookOptions<SelectAllUserQuery, SelectAllUserQueryVariables>) {
+export function useMyQueryQuery(baseOptions?: Apollo.QueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SelectAllUserQuery, SelectAllUserQueryVariables>(SelectAllUserDocument, options);
+        return Apollo.useQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
       }
-export function useSelectAllUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SelectAllUserQuery, SelectAllUserQueryVariables>) {
+export function useMyQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SelectAllUserQuery, SelectAllUserQueryVariables>(SelectAllUserDocument, options);
+          return Apollo.useLazyQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
         }
-export type SelectAllUserQueryHookResult = ReturnType<typeof useSelectAllUserQuery>;
-export type SelectAllUserLazyQueryHookResult = ReturnType<typeof useSelectAllUserLazyQuery>;
-export type SelectAllUserQueryResult = Apollo.QueryResult<SelectAllUserQuery, SelectAllUserQueryVariables>;
+export type MyQueryQueryHookResult = ReturnType<typeof useMyQueryQuery>;
+export type MyQueryLazyQueryHookResult = ReturnType<typeof useMyQueryLazyQuery>;
+export type MyQueryQueryResult = Apollo.QueryResult<MyQueryQuery, MyQueryQueryVariables>;
