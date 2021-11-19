@@ -10,6 +10,7 @@ const Home = () => {
   const handleSignOut = () => {
     supabase.auth.signOut();
   };
+  const session = supabase.auth.session();
   return (
     <div>
       <h1>Hello World</h1>
