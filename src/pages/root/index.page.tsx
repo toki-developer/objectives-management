@@ -12,9 +12,6 @@ const Home = () => {
     supabase.auth.signOut();
   };
   const user = supabase.auth.user();
-  console.log(user);
-  const session = supabase.auth.session();
-  console.log(session?.access_token);
   const handleClick = async () => {
     await supabase
       .from("objectives")
