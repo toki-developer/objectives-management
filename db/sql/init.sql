@@ -24,3 +24,15 @@ create trigger on_auth_user_created
 
 -- objectives table
 
+create table objectives (
+  id uuid default uuid_generate_v1() primary key,
+  user_id uuid default auth.uid() references public.users not null,
+  title text,
+  sort_order int default 0,
+  finish_flg int default 0,
+  delete_flg int default 0,
+);
+-- alter table objectives enable row level security;
+-- create policy "Can view own objectives data." on objectives for select using (auth.uid() = user_id);
+-- create policy "Can update own objectives data." on objectives for update using (auth.uid() = user_id);
+

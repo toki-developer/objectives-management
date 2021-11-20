@@ -12,10 +12,22 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  timestamptz: any;
   uuid: any;
 };
 
+
+/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+export type Int_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Int']>;
+  _gt?: Maybe<Scalars['Int']>;
+  _gte?: Maybe<Scalars['Int']>;
+  _in?: Maybe<Array<Scalars['Int']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Int']>;
+  _lte?: Maybe<Scalars['Int']>;
+  _neq?: Maybe<Scalars['Int']>;
+  _nin?: Maybe<Array<Scalars['Int']>>;
+};
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
@@ -96,6 +108,7 @@ export type Mutation_RootInsert_Objectives_OneArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_ObjectivesArgs = {
+  _inc?: Maybe<Objectives_Inc_Input>;
   _set?: Maybe<Objectives_Set_Input>;
   where: Objectives_Bool_Exp;
 };
@@ -103,6 +116,7 @@ export type Mutation_RootUpdate_ObjectivesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Objectives_By_PkArgs = {
+  _inc?: Maybe<Objectives_Inc_Input>;
   _set?: Maybe<Objectives_Set_Input>;
   pk_columns: Objectives_Pk_Columns_Input;
 };
@@ -110,9 +124,12 @@ export type Mutation_RootUpdate_Objectives_By_PkArgs = {
 /** columns and relationships of "objectives" */
 export type Objectives = {
   __typename?: 'objectives';
-  created_at?: Maybe<Scalars['timestamptz']>;
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
   id: Scalars['uuid'];
-  title: Scalars['String'];
+  sort_order?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  user_id: Scalars['uuid'];
 };
 
 /** aggregated selection of "objectives" */
@@ -125,9 +142,17 @@ export type Objectives_Aggregate = {
 /** aggregate fields of "objectives" */
 export type Objectives_Aggregate_Fields = {
   __typename?: 'objectives_aggregate_fields';
+  avg?: Maybe<Objectives_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Objectives_Max_Fields>;
   min?: Maybe<Objectives_Min_Fields>;
+  stddev?: Maybe<Objectives_Stddev_Fields>;
+  stddev_pop?: Maybe<Objectives_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Objectives_Stddev_Samp_Fields>;
+  sum?: Maybe<Objectives_Sum_Fields>;
+  var_pop?: Maybe<Objectives_Var_Pop_Fields>;
+  var_samp?: Maybe<Objectives_Var_Samp_Fields>;
+  variance?: Maybe<Objectives_Variance_Fields>;
 };
 
 
@@ -137,14 +162,25 @@ export type Objectives_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** aggregate avg on columns */
+export type Objectives_Avg_Fields = {
+  __typename?: 'objectives_avg_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
 /** Boolean expression to filter rows from the table "objectives". All fields are combined with a logical 'AND'. */
 export type Objectives_Bool_Exp = {
   _and?: Maybe<Array<Objectives_Bool_Exp>>;
   _not?: Maybe<Objectives_Bool_Exp>;
   _or?: Maybe<Array<Objectives_Bool_Exp>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  delete_flg?: Maybe<Int_Comparison_Exp>;
+  finish_flg?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  sort_order?: Maybe<Int_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "objectives" */
@@ -153,27 +189,43 @@ export enum Objectives_Constraint {
   ObjectivesPkey = 'objectives_pkey'
 }
 
+/** input type for incrementing numeric columns in table "objectives" */
+export type Objectives_Inc_Input = {
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
+  sort_order?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "objectives" */
 export type Objectives_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
+  sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
 export type Objectives_Max_Fields = {
   __typename?: 'objectives_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
+  sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate min on columns */
 export type Objectives_Min_Fields = {
   __typename?: 'objectives_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
+  sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** response of any mutation on the table "objectives" */
@@ -194,9 +246,12 @@ export type Objectives_On_Conflict = {
 
 /** Ordering options when selecting data from "objectives". */
 export type Objectives_Order_By = {
-  created_at?: Maybe<Order_By>;
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: objectives */
@@ -207,29 +262,100 @@ export type Objectives_Pk_Columns_Input = {
 /** select columns of table "objectives" */
 export enum Objectives_Select_Column {
   /** column name */
-  CreatedAt = 'created_at',
+  DeleteFlg = 'delete_flg',
+  /** column name */
+  FinishFlg = 'finish_flg',
   /** column name */
   Id = 'id',
   /** column name */
-  Title = 'title'
+  SortOrder = 'sort_order',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UserId = 'user_id'
 }
 
 /** input type for updating data in table "objectives" */
 export type Objectives_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
+  sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type Objectives_Stddev_Fields = {
+  __typename?: 'objectives_stddev_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Objectives_Stddev_Pop_Fields = {
+  __typename?: 'objectives_stddev_pop_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Objectives_Stddev_Samp_Fields = {
+  __typename?: 'objectives_stddev_samp_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Objectives_Sum_Fields = {
+  __typename?: 'objectives_sum_fields';
+  delete_flg?: Maybe<Scalars['Int']>;
+  finish_flg?: Maybe<Scalars['Int']>;
+  sort_order?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "objectives" */
 export enum Objectives_Update_Column {
   /** column name */
-  CreatedAt = 'created_at',
+  DeleteFlg = 'delete_flg',
+  /** column name */
+  FinishFlg = 'finish_flg',
   /** column name */
   Id = 'id',
   /** column name */
-  Title = 'title'
+  SortOrder = 'sort_order',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UserId = 'user_id'
 }
+
+/** aggregate var_pop on columns */
+export type Objectives_Var_Pop_Fields = {
+  __typename?: 'objectives_var_pop_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Objectives_Var_Samp_Fields = {
+  __typename?: 'objectives_var_samp_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Objectives_Variance_Fields = {
+  __typename?: 'objectives_variance_fields';
+  delete_flg?: Maybe<Scalars['Float']>;
+  finish_flg?: Maybe<Scalars['Float']>;
+  sort_order?: Maybe<Scalars['Float']>;
+};
 
 /** column ordering options */
 export enum Order_By {
@@ -314,20 +440,6 @@ export type Subscription_RootObjectives_By_PkArgs = {
 };
 
 
-/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
-export type Timestamptz_Comparison_Exp = {
-  _eq?: Maybe<Scalars['timestamptz']>;
-  _gt?: Maybe<Scalars['timestamptz']>;
-  _gte?: Maybe<Scalars['timestamptz']>;
-  _in?: Maybe<Array<Scalars['timestamptz']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['timestamptz']>;
-  _lte?: Maybe<Scalars['timestamptz']>;
-  _neq?: Maybe<Scalars['timestamptz']>;
-  _nin?: Maybe<Array<Scalars['timestamptz']>>;
-};
-
-
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
   _eq?: Maybe<Scalars['uuid']>;
@@ -341,50 +453,53 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetObjectiveListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQueryQuery = (
+export type GetObjectiveListQuery = (
   { __typename?: 'query_root' }
   & { objectives: Array<(
     { __typename?: 'objectives' }
-    & Pick<Objectives, 'id' | 'title'>
+    & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
   )> }
 );
 
 
-export const MyQueryDocument = gql`
-    query MyQuery {
+export const GetObjectiveListDocument = gql`
+    query GetObjectiveList {
   objectives {
     id
     title
+    sort_order
+    finish_flg
+    delete_flg
   }
 }
     `;
 
 /**
- * __useMyQueryQuery__
+ * __useGetObjectiveListQuery__
  *
- * To run a query within a React component, call `useMyQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetObjectiveListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetObjectiveListQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMyQueryQuery({
+ * const { data, loading, error } = useGetObjectiveListQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMyQueryQuery(baseOptions?: Apollo.QueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
+export function useGetObjectiveListQuery(baseOptions?: Apollo.QueryHookOptions<GetObjectiveListQuery, GetObjectiveListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
+        return Apollo.useQuery<GetObjectiveListQuery, GetObjectiveListQueryVariables>(GetObjectiveListDocument, options);
       }
-export function useMyQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
+export function useGetObjectiveListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetObjectiveListQuery, GetObjectiveListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
+          return Apollo.useLazyQuery<GetObjectiveListQuery, GetObjectiveListQueryVariables>(GetObjectiveListDocument, options);
         }
-export type MyQueryQueryHookResult = ReturnType<typeof useMyQueryQuery>;
-export type MyQueryLazyQueryHookResult = ReturnType<typeof useMyQueryLazyQuery>;
-export type MyQueryQueryResult = Apollo.QueryResult<MyQueryQuery, MyQueryQueryVariables>;
+export type GetObjectiveListQueryHookResult = ReturnType<typeof useGetObjectiveListQuery>;
+export type GetObjectiveListLazyQueryHookResult = ReturnType<typeof useGetObjectiveListLazyQuery>;
+export type GetObjectiveListQueryResult = Apollo.QueryResult<GetObjectiveListQuery, GetObjectiveListQueryVariables>;
