@@ -9,7 +9,7 @@ export const Header = () => {
   };
   const user = supabase.auth.user();
   return (
-    <header>
+    <header className="text-right">
       {user ? (
         <button onClick={handleSignOut}>ログアウト</button>
       ) : (
