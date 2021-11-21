@@ -36,3 +36,17 @@ create table objectives (
 -- create policy "Can view own objectives data." on objectives for select using (auth.uid() = user_id);
 -- create policy "Can update own objectives data." on objectives for update using (auth.uid() = user_id);
 
+create table objective_items (
+  id uuid default uuid_generate_v1() primary key,
+  objective_id uuid references public.objectives not null,
+  user_id uuid default auth.uid() references public.users not null,
+  title text,
+  success_num int default 0,
+  failure_num int default 0,
+  finish_flg int default 0,
+  evaluation_type int default 0, --0.no, 1.num, 2.probability
+  items_type int not null -- 1.purpose, 2.action, 3.evaluation
+);
+-- alter table objectives enable row level security;
+-- create policy "Can view own objectives data." on objectives for select using (auth.uid() = user_id);
+-- create policy "Can update own objectives data." on objectives for update using (auth.uid() = user_id);

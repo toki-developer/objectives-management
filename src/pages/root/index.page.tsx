@@ -1,5 +1,5 @@
 import { Layout } from "src/layout";
-import { ObjectiveList } from "src/pages/root/objectiveList";
+import { ObjectiveList } from "src/pages/root/ObjectiveList";
 
 const Home = () => {
   return (
