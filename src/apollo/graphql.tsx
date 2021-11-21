@@ -69,14 +69,26 @@ export type Mutation_Root = {
   delete_objectives?: Maybe<Objectives_Mutation_Response>;
   /** delete single row from the table: "objectives" */
   delete_objectives_by_pk?: Maybe<Objectives>;
+  /** delete data from the table: "users" */
+  delete_users?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "users" */
+  delete_users_by_pk?: Maybe<Users>;
   /** insert data into the table: "objectives" */
   insert_objectives?: Maybe<Objectives_Mutation_Response>;
   /** insert a single row into the table: "objectives" */
   insert_objectives_one?: Maybe<Objectives>;
+  /** insert data into the table: "users" */
+  insert_users?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "users" */
+  insert_users_one?: Maybe<Users>;
   /** update data of the table: "objectives" */
   update_objectives?: Maybe<Objectives_Mutation_Response>;
   /** update single row of the table: "objectives" */
   update_objectives_by_pk?: Maybe<Objectives>;
+  /** update data of the table: "users" */
+  update_users?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  update_users_by_pk?: Maybe<Users>;
 };
 
 
@@ -88,6 +100,18 @@ export type Mutation_RootDelete_ObjectivesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Objectives_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UsersArgs = {
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -107,6 +131,20 @@ export type Mutation_RootInsert_Objectives_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_UsersArgs = {
+  objects: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Users_OneArgs = {
+  object: Users_Insert_Input;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ObjectivesArgs = {
   _inc?: Maybe<Objectives_Inc_Input>;
   _set?: Maybe<Objectives_Set_Input>;
@@ -121,6 +159,20 @@ export type Mutation_RootUpdate_Objectives_By_PkArgs = {
   pk_columns: Objectives_Pk_Columns_Input;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
+};
+
 /** columns and relationships of "objectives" */
 export type Objectives = {
   __typename?: 'objectives';
@@ -129,6 +181,8 @@ export type Objectives = {
   id: Scalars['uuid'];
   sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
 };
 
@@ -162,12 +216,41 @@ export type Objectives_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "objectives" */
+export type Objectives_Aggregate_Order_By = {
+  avg?: Maybe<Objectives_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Objectives_Max_Order_By>;
+  min?: Maybe<Objectives_Min_Order_By>;
+  stddev?: Maybe<Objectives_Stddev_Order_By>;
+  stddev_pop?: Maybe<Objectives_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Objectives_Stddev_Samp_Order_By>;
+  sum?: Maybe<Objectives_Sum_Order_By>;
+  var_pop?: Maybe<Objectives_Var_Pop_Order_By>;
+  var_samp?: Maybe<Objectives_Var_Samp_Order_By>;
+  variance?: Maybe<Objectives_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "objectives" */
+export type Objectives_Arr_Rel_Insert_Input = {
+  data: Array<Objectives_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Objectives_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Objectives_Avg_Fields = {
   __typename?: 'objectives_avg_fields';
   delete_flg?: Maybe<Scalars['Float']>;
   finish_flg?: Maybe<Scalars['Float']>;
   sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "objectives" */
+export type Objectives_Avg_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "objectives". All fields are combined with a logical 'AND'. */
@@ -180,6 +263,7 @@ export type Objectives_Bool_Exp = {
   id?: Maybe<Uuid_Comparison_Exp>;
   sort_order?: Maybe<Int_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
   user_id?: Maybe<Uuid_Comparison_Exp>;
 };
 
@@ -203,6 +287,7 @@ export type Objectives_Insert_Input = {
   id?: Maybe<Scalars['uuid']>;
   sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -217,6 +302,16 @@ export type Objectives_Max_Fields = {
   user_id?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "objectives" */
+export type Objectives_Max_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Objectives_Min_Fields = {
   __typename?: 'objectives_min_fields';
@@ -226,6 +321,16 @@ export type Objectives_Min_Fields = {
   sort_order?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "objectives" */
+export type Objectives_Min_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "objectives" */
@@ -251,6 +356,7 @@ export type Objectives_Order_By = {
   id?: Maybe<Order_By>;
   sort_order?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -293,12 +399,26 @@ export type Objectives_Stddev_Fields = {
   sort_order?: Maybe<Scalars['Float']>;
 };
 
+/** order by stddev() on columns of table "objectives" */
+export type Objectives_Stddev_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Objectives_Stddev_Pop_Fields = {
   __typename?: 'objectives_stddev_pop_fields';
   delete_flg?: Maybe<Scalars['Float']>;
   finish_flg?: Maybe<Scalars['Float']>;
   sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "objectives" */
+export type Objectives_Stddev_Pop_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -309,12 +429,26 @@ export type Objectives_Stddev_Samp_Fields = {
   sort_order?: Maybe<Scalars['Float']>;
 };
 
+/** order by stddev_samp() on columns of table "objectives" */
+export type Objectives_Stddev_Samp_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+};
+
 /** aggregate sum on columns */
 export type Objectives_Sum_Fields = {
   __typename?: 'objectives_sum_fields';
   delete_flg?: Maybe<Scalars['Int']>;
   finish_flg?: Maybe<Scalars['Int']>;
   sort_order?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "objectives" */
+export type Objectives_Sum_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
 };
 
 /** update columns of table "objectives" */
@@ -341,6 +475,13 @@ export type Objectives_Var_Pop_Fields = {
   sort_order?: Maybe<Scalars['Float']>;
 };
 
+/** order by var_pop() on columns of table "objectives" */
+export type Objectives_Var_Pop_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Objectives_Var_Samp_Fields = {
   __typename?: 'objectives_var_samp_fields';
@@ -349,12 +490,26 @@ export type Objectives_Var_Samp_Fields = {
   sort_order?: Maybe<Scalars['Float']>;
 };
 
+/** order by var_samp() on columns of table "objectives" */
+export type Objectives_Var_Samp_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Objectives_Variance_Fields = {
   __typename?: 'objectives_variance_fields';
   delete_flg?: Maybe<Scalars['Float']>;
   finish_flg?: Maybe<Scalars['Float']>;
   sort_order?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "objectives" */
+export type Objectives_Variance_Order_By = {
+  delete_flg?: Maybe<Order_By>;
+  finish_flg?: Maybe<Order_By>;
+  sort_order?: Maybe<Order_By>;
 };
 
 /** column ordering options */
@@ -375,12 +530,18 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "objectives" */
+  /** An array relationship */
   objectives: Array<Objectives>;
-  /** fetch aggregated fields from the table: "objectives" */
+  /** An aggregate relationship */
   objectives_aggregate: Objectives_Aggregate;
   /** fetch data from the table: "objectives" using primary key columns */
   objectives_by_pk?: Maybe<Objectives>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 
@@ -406,14 +567,43 @@ export type Query_RootObjectives_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
+
+export type Query_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "objectives" */
+  /** An array relationship */
   objectives: Array<Objectives>;
-  /** fetch aggregated fields from the table: "objectives" */
+  /** An aggregate relationship */
   objectives_aggregate: Objectives_Aggregate;
   /** fetch data from the table: "objectives" using primary key columns */
   objectives_by_pk?: Maybe<Objectives>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 
@@ -440,6 +630,187 @@ export type Subscription_RootObjectives_By_PkArgs = {
 };
 
 
+export type Subscription_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+/** columns and relationships of "users" */
+export type Users = {
+  __typename?: 'users';
+  avatar_url?: Maybe<Scalars['String']>;
+  full_name?: Maybe<Scalars['String']>;
+  id: Scalars['uuid'];
+  /** An array relationship */
+  objectives: Array<Objectives>;
+  /** An aggregate relationship */
+  objectives_aggregate: Objectives_Aggregate;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersObjectivesArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersObjectives_AggregateArgs = {
+  distinct_on?: Maybe<Array<Objectives_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Objectives_Order_By>>;
+  where?: Maybe<Objectives_Bool_Exp>;
+};
+
+/** aggregated selection of "users" */
+export type Users_Aggregate = {
+  __typename?: 'users_aggregate';
+  aggregate?: Maybe<Users_Aggregate_Fields>;
+  nodes: Array<Users>;
+};
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_Fields = {
+  __typename?: 'users_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Users_Max_Fields>;
+  min?: Maybe<Users_Min_Fields>;
+};
+
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Users_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export type Users_Bool_Exp = {
+  _and?: Maybe<Array<Users_Bool_Exp>>;
+  _not?: Maybe<Users_Bool_Exp>;
+  _or?: Maybe<Array<Users_Bool_Exp>>;
+  avatar_url?: Maybe<String_Comparison_Exp>;
+  full_name?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  objectives?: Maybe<Objectives_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "users" */
+export enum Users_Constraint {
+  /** unique or primary key constraint */
+  UsersPkey = 'users_pkey'
+}
+
+/** input type for inserting data into table "users" */
+export type Users_Insert_Input = {
+  avatar_url?: Maybe<Scalars['String']>;
+  full_name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  objectives?: Maybe<Objectives_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Users_Max_Fields = {
+  __typename?: 'users_max_fields';
+  avatar_url?: Maybe<Scalars['String']>;
+  full_name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type Users_Min_Fields = {
+  __typename?: 'users_min_fields';
+  avatar_url?: Maybe<Scalars['String']>;
+  full_name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "users" */
+export type Users_Mutation_Response = {
+  __typename?: 'users_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Users>;
+};
+
+/** input type for inserting object relation for remote table "users" */
+export type Users_Obj_Rel_Insert_Input = {
+  data: Users_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+/** on conflict condition type for table "users" */
+export type Users_On_Conflict = {
+  constraint: Users_Constraint;
+  update_columns?: Array<Users_Update_Column>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "users". */
+export type Users_Order_By = {
+  avatar_url?: Maybe<Order_By>;
+  full_name?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  objectives_aggregate?: Maybe<Objectives_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: users */
+export type Users_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "users" */
+export enum Users_Select_Column {
+  /** column name */
+  AvatarUrl = 'avatar_url',
+  /** column name */
+  FullName = 'full_name',
+  /** column name */
+  Id = 'id'
+}
+
+/** input type for updating data in table "users" */
+export type Users_Set_Input = {
+  avatar_url?: Maybe<Scalars['String']>;
+  full_name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "users" */
+export enum Users_Update_Column {
+  /** column name */
+  AvatarUrl = 'avatar_url',
+  /** column name */
+  FullName = 'full_name',
+  /** column name */
+  Id = 'id'
+}
+
+
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
   _eq?: Maybe<Scalars['uuid']>;
@@ -461,6 +832,19 @@ export type GetObjectiveListQuery = (
   & { objectives: Array<(
     { __typename?: 'objectives' }
     & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
+  )> }
+);
+
+export type AddObjectiveMutationVariables = Exact<{
+  title: Scalars['String'];
+}>;
+
+
+export type AddObjectiveMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_objectives_one?: Maybe<(
+    { __typename?: 'objectives' }
+    & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'delete_flg' | 'finish_flg' | 'user_id'>
   )> }
 );
 
@@ -503,3 +887,41 @@ export function useGetObjectiveListLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetObjectiveListQueryHookResult = ReturnType<typeof useGetObjectiveListQuery>;
 export type GetObjectiveListLazyQueryHookResult = ReturnType<typeof useGetObjectiveListLazyQuery>;
 export type GetObjectiveListQueryResult = Apollo.QueryResult<GetObjectiveListQuery, GetObjectiveListQueryVariables>;
+export const AddObjectiveDocument = gql`
+    mutation AddObjective($title: String!) {
+  insert_objectives_one(object: {title: $title}) {
+    id
+    title
+    sort_order
+    delete_flg
+    finish_flg
+    user_id
+  }
+}
+    `;
+export type AddObjectiveMutationFn = Apollo.MutationFunction<AddObjectiveMutation, AddObjectiveMutationVariables>;
+
+/**
+ * __useAddObjectiveMutation__
+ *
+ * To run a mutation, you first call `useAddObjectiveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddObjectiveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addObjectiveMutation, { data, loading, error }] = useAddObjectiveMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useAddObjectiveMutation(baseOptions?: Apollo.MutationHookOptions<AddObjectiveMutation, AddObjectiveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddObjectiveMutation, AddObjectiveMutationVariables>(AddObjectiveDocument, options);
+      }
+export type AddObjectiveMutationHookResult = ReturnType<typeof useAddObjectiveMutation>;
+export type AddObjectiveMutationResult = Apollo.MutationResult<AddObjectiveMutation>;
+export type AddObjectiveMutationOptions = Apollo.BaseMutationOptions<AddObjectiveMutation, AddObjectiveMutationVariables>;
