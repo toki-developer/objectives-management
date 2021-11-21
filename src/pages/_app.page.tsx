@@ -7,7 +7,7 @@ import { apolloClient } from "src/apollo/apolloClient";
 
 const App = (props: AppProps) => {
   useEffect(() => {
-    document.body.classList.add("bg-gray-900", "text-whit");
+    document.body.classList.add("bg-gray-900", "text-white");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
