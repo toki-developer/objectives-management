@@ -1414,6 +1414,26 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type ObjectiveFieldFragment = (
+  { __typename?: 'objectives' }
+  & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
+  & { purpose_items: Array<(
+    { __typename?: 'objective_items' }
+    & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+  )>, action_items: Array<(
+    { __typename?: 'objective_items' }
+    & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+  )>, evaluation_items: Array<(
+    { __typename?: 'objective_items' }
+    & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+  )> }
+);
+
+export type ObjectiveItemFieldFragment = (
+  { __typename?: 'objective_items' }
+  & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+);
+
 export type GetObjectiveListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1422,6 +1442,16 @@ export type GetObjectiveListQuery = (
   & { objectives: Array<(
     { __typename?: 'objectives' }
     & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
+    & { purpose_items: Array<(
+      { __typename?: 'objective_items' }
+      & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+    )>, action_items: Array<(
+      { __typename?: 'objective_items' }
+      & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+    )>, evaluation_items: Array<(
+      { __typename?: 'objective_items' }
+      & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
+    )> }
   )> }
 );
 
@@ -1439,11 +1469,17 @@ export type AddObjectiveMutation = (
   )> }
 );
 
-export type ObjectiveFieldFragment = (
-  { __typename?: 'objectives' }
-  & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
-);
-
+export const ObjectiveItemFieldFragmentDoc = gql`
+    fragment ObjectiveItemField on objective_items {
+  id
+  title
+  items_type
+  evaluation_type
+  success_num
+  failure_num
+  finish_flg
+}
+    `;
 export const ObjectiveFieldFragmentDoc = gql`
     fragment ObjectiveField on objectives {
   id
@@ -1451,8 +1487,17 @@ export const ObjectiveFieldFragmentDoc = gql`
   sort_order
   finish_flg
   delete_flg
+  purpose_items: objective_items(where: {items_type: {_eq: 1}}) {
+    ...ObjectiveItemField
+  }
+  action_items: objective_items(where: {items_type: {_eq: 2}}) {
+    ...ObjectiveItemField
+  }
+  evaluation_items: objective_items(where: {items_type: {_eq: 3}}) {
+    ...ObjectiveItemField
+  }
 }
-    `;
+    ${ObjectiveItemFieldFragmentDoc}`;
 export const GetObjectiveListDocument = gql`
     query GetObjectiveList {
   objectives {

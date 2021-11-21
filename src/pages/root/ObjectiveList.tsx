@@ -1,11 +1,11 @@
 import { gql } from "@apollo/client";
 import { useFieldArray, useForm } from "react-hook-form";
-import type { AddObjectiveMutationVariables } from "src/apollo/graphql";
 import {
   useAddObjectiveMutation,
   useGetObjectiveListQuery,
 } from "src/apollo/graphql";
-import { ObjectiveListItem } from "src/pages/root/ObjectiveListItem";
+import { Objective } from "src/pages/root/Objective";
+import { formItemInfoList } from "src/pages/root/utils";
 import { supabase } from "src/utils/libs/initSupabase";
 
 const ObjectForm = () => {
@@ -34,12 +34,7 @@ const ObjectForm = () => {
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     append({ title: "", items_type: parseInt(e.currentTarget.value) });
   };
-  const formItemInfoList = [
-    { title: "", placeholder: "" },
-    { title: "目的", placeholder: "なぜ目標を達成するのですか？" },
-    { title: "行動", placeholder: "どんな行動をしますか？" },
-    { title: "評価指標", placeholder: "どうすれば達成ですか？" },
-  ];
+
   return (
     <div>
       <fieldset>
@@ -64,7 +59,7 @@ const ObjectForm = () => {
         })}
       </fieldset>
       <div className="flex justify-between py-2">
-        <div className="text-gray-300 space-x-4">
+        <div className="text-gray-400 space-x-4">
           <button onClick={handleAddForm} value="1">
             + 目的
           </button>
@@ -95,7 +90,7 @@ export const ObjectiveList = () => {
     <div>
       <ObjectForm />
       {data?.objectives.map((objective) => {
-        return <ObjectiveListItem objective={objective} key={objective.id} />;
+        return <Objective objective={objective} key={objective.id} />;
       })}
     </div>
   );
@@ -126,4 +121,4 @@ gql`
 // 1. formを減らす
 // 2. formで評価の種類を入れる(回数、割合)
 // 3. 並び
-// 4. 型の整理
+// 4. objective_items_arr_rel_insert_inputを必要な型に修正
