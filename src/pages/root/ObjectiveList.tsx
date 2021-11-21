@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import {
   useAddObjectiveMutation,
@@ -18,7 +19,7 @@ const ObjectForm = () => {
     title: string;
     objective_items: { title: string; items_type: number }[];
   }>();
-  const { fields, append } = useFieldArray({
+  const { fields, insert } = useFieldArray({
     control,
     name: "objective_items",
   });
@@ -31,8 +32,15 @@ const ObjectForm = () => {
       },
     });
   });
+  const [length, setLength] = useState([0, 0, 0]);
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
-    append({ title: "", items_type: parseInt(e.currentTarget.value) });
+    const items_type = parseInt(e.currentTarget.value);
+    const index = length.slice(0, items_type).reduce((prev, current) => {
+      return prev + current;
+    });
+    insert(index, { title: "", items_type });
+    length[items_type - 1] += 1;
+    setLength(length);
   };
 
   return (
@@ -40,7 +48,7 @@ const ObjectForm = () => {
       <fieldset>
         <input
           {...register("title")}
-          className="bg-transparent border-b border-gray-600 p-2 w-full"
+          className="bg-transparent border-b border-gray-600 p-2 w-full focus:outline-none"
           placeholder="目標はなに？"
         />
         {fields.map((field, index) => {
@@ -50,7 +58,7 @@ const ObjectForm = () => {
                 {formItemInfoList[field.items_type].title}：
                 <input
                   {...register(`objective_items.${index}.title`)}
-                  className="bg-transparent border-b border-gray-600 p-2 flex-auto"
+                  className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
                   placeholder={formItemInfoList[field.items_type].placeholder}
                 />
               </label>
@@ -120,5 +128,4 @@ gql`
 // todo
 // 1. formを減らす
 // 2. formで評価の種類を入れる(回数、割合)
-// 3. 並び
 // 4. objective_items_arr_rel_insert_inputを必要な型に修正
