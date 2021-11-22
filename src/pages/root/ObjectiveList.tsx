@@ -15,7 +15,7 @@ const ObjectForm = () => {
     control,
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
     reset,
   } = useForm<{
     title: string;
@@ -75,10 +75,17 @@ const ObjectForm = () => {
     <div>
       <fieldset>
         <input
-          {...register("title")}
+          {...register("title", {
+            required: { value: true, message: "入力必須です" },
+            minLength: { value: 2, message: "2文字以上で入力してください" },
+            maxLength: { value: 1000, message: "1000文字以下で入力してください" },
+          })}
           className="bg-transparent border-b border-gray-600 p-2 w-full focus:outline-none"
           placeholder="目標はなに？"
         />
+        {errors.title ? (
+          <p className="text-red-500 text-xs ml-2">※ {errors.title?.message}</p>
+        ) : null}
         {fields.map((field, index) => {
           return (
             <div key={index}>
@@ -89,10 +96,7 @@ const ObjectForm = () => {
                   className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
                   placeholder={formItemInfoList[field.items_type].placeholder}
                 />
-                <button
-                  onClick={handleRemoveForm}
-                  value={`${index},${field.items_type}`}
-                >
+                <button onClick={handleRemoveForm} value={`${index},${field.items_type}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 mx-2"
@@ -163,13 +167,8 @@ gql`
 `;
 
 gql`
-  mutation AddObjective(
-    $title: String!
-    $objective_items: objective_items_arr_rel_insert_input
-  ) {
-    insert_objectives_one(
-      object: { title: $title, objective_items: $objective_items }
-    ) {
+  mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
+    insert_objectives_one(object: { title: $title, objective_items: $objective_items }) {
       id
     }
   }
