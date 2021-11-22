@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import {
+  ObjectiveFieldFragmentDoc,
   useAddObjectiveMutation,
   useGetObjectiveListQuery,
 } from "src/apollo/graphql";
@@ -23,14 +24,33 @@ const ObjectForm = () => {
     control,
     name: "objective_items",
   });
-  const [addObjective] = useAddObjectiveMutation();
-  const handleClick = handleSubmit((data) => {
-    addObjective({
-      variables: {
-        title: data.title,
-        objective_items: { data: data.objective_items },
-      },
-    });
+  const [addObjective] = useAddObjectiveMutation({
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          objectives(existingObjectiveRefs = []) {
+            const newObjectiveRef = cache.writeFragment({
+              data: data?.insert_objectives_one,
+              fragment: ObjectiveFieldFragmentDoc,
+              fragmentName: "ObjectiveField",
+            });
+            return [...existingObjectiveRefs, newObjectiveRef];
+          },
+        },
+      });
+    },
+  });
+  const handleClick = handleSubmit(async (data) => {
+    try {
+      await addObjective({
+        variables: {
+          title: data.title,
+          objective_items: { data: data.objective_items },
+        },
+      });
+    } catch (error) {
+      alert("エラーが発生しました");
+    }
   });
   const [length, setLength] = useState([0, 0, 0]);
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -151,5 +171,4 @@ gql`
 `;
 
 // todo
-// 2. formで評価の種類を入れる(回数、割合)
-// 4. objective_items_arr_rel_insert_inputを必要な型に修正
+// objective_items_arr_rel_insert_inputを必要な型に修正
