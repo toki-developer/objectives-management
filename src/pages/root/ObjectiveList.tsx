@@ -19,7 +19,7 @@ const ObjectForm = () => {
     title: string;
     objective_items: { title: string; items_type: number }[];
   }>();
-  const { fields, insert } = useFieldArray({
+  const { fields, insert, remove } = useFieldArray({
     control,
     name: "objective_items",
   });
@@ -42,6 +42,12 @@ const ObjectForm = () => {
     length[items_type - 1] += 1;
     setLength(length);
   };
+  const handleRemoveForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const [index, items_type] = e.currentTarget.value.split(",");
+    length[parseInt(items_type) - 1] -= 1;
+    setLength(length);
+    remove(parseInt(index));
+  };
 
   return (
     <div>
@@ -55,12 +61,31 @@ const ObjectForm = () => {
           return (
             <div key={index}>
               <label className="flex items-center">
-                {formItemInfoList[field.items_type].title}：
+                <span>{formItemInfoList[field.items_type].title}：</span>
                 <input
                   {...register(`objective_items.${index}.title`)}
                   className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
                   placeholder={formItemInfoList[field.items_type].placeholder}
                 />
+                <button
+                  onClick={handleRemoveForm}
+                  value={`${index},${field.items_type}`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 mx-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
               </label>
             </div>
           );
@@ -126,6 +151,5 @@ gql`
 `;
 
 // todo
-// 1. formを減らす
 // 2. formで評価の種類を入れる(回数、割合)
 // 4. objective_items_arr_rel_insert_inputを必要な型に修正
