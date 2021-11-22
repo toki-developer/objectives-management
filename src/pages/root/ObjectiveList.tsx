@@ -16,6 +16,7 @@ const ObjectForm = () => {
     register,
     handleSubmit,
     // formState: { errors },
+    reset,
   } = useForm<{
     title: string;
     objective_items: { title: string; items_type: number }[];
@@ -24,7 +25,7 @@ const ObjectForm = () => {
     control,
     name: "objective_items",
   });
-  const [addObjective] = useAddObjectiveMutation({
+  const [addObjective, { loading }] = useAddObjectiveMutation({
     update(cache, { data }) {
       cache.modify({
         fields: {
@@ -48,6 +49,7 @@ const ObjectForm = () => {
           objective_items: { data: data.objective_items },
         },
       });
+      reset({ title: "", objective_items: [] });
     } catch (error) {
       alert("エラーが発生しました");
     }
@@ -125,9 +127,12 @@ const ObjectForm = () => {
         </div>
         <button
           onClick={handleClick}
-          className="px-2 py-1 rounded-md bg-green-600"
+          className={`px-2 py-1 rounded-md w-20 ${
+            loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600"
+          }`}
+          disabled={loading}
         >
-          保存
+          {loading ? "保存中" : "保存"}
         </button>
       </div>
     </div>
