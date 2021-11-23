@@ -8,10 +8,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = supabase.auth.session()?.access_token;
-  // return the headers to the context so httpLink can read them
-  return token
-    ? { headers: { ...headers, authorization: `Bearer ${token}` } }
-    : { headers };
+  return token ? { headers: { ...headers, authorization: `Bearer ${token}` } } : { headers };
 });
 
 export const apolloClient = new ApolloClient({

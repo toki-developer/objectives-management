@@ -1,7 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql, useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { userVar } from "src/apollo/cache";
 import {
   ObjectiveFieldFragmentDoc,
   useAddObjectiveMutation,
@@ -9,7 +10,6 @@ import {
 } from "src/apollo/graphql";
 import { Objective } from "src/pages/root/Objective";
 import { formItemInfoList } from "src/pages/root/utils";
-import { supabase } from "src/utils/libs/initSupabase";
 
 const ObjectForm = () => {
   const {
@@ -146,8 +146,8 @@ const ObjectForm = () => {
 };
 
 export const ObjectiveList = () => {
-  const user = supabase.auth.user();
-  const { data, loading, error } = useGetObjectiveListQuery({ skip: !user });
+  const loginUser = useReactiveVar(userVar);
+  const { data, loading, error } = useGetObjectiveListQuery({ skip: !loginUser });
   if (loading) return <p>loading</p>;
   if (error) return <p>error</p>;
   return (
