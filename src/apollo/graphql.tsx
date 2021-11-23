@@ -1434,6 +1434,19 @@ export type ObjectiveItemFieldFragment = (
   & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
 );
 
+export type DeleteObjectiveMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteObjectiveMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_objectives_by_pk?: Maybe<(
+    { __typename?: 'objectives' }
+    & Pick<Objectives, 'id'>
+  )> }
+);
+
 export type GetObjectiveListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1498,6 +1511,39 @@ export const ObjectiveFieldFragmentDoc = gql`
   }
 }
     ${ObjectiveItemFieldFragmentDoc}`;
+export const DeleteObjectiveDocument = gql`
+    mutation DeleteObjective($id: uuid!) {
+  delete_objectives_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteObjectiveMutationFn = Apollo.MutationFunction<DeleteObjectiveMutation, DeleteObjectiveMutationVariables>;
+
+/**
+ * __useDeleteObjectiveMutation__
+ *
+ * To run a mutation, you first call `useDeleteObjectiveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteObjectiveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteObjectiveMutation, { data, loading, error }] = useDeleteObjectiveMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteObjectiveMutation(baseOptions?: Apollo.MutationHookOptions<DeleteObjectiveMutation, DeleteObjectiveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteObjectiveMutation, DeleteObjectiveMutationVariables>(DeleteObjectiveDocument, options);
+      }
+export type DeleteObjectiveMutationHookResult = ReturnType<typeof useDeleteObjectiveMutation>;
+export type DeleteObjectiveMutationResult = Apollo.MutationResult<DeleteObjectiveMutation>;
+export type DeleteObjectiveMutationOptions = Apollo.BaseMutationOptions<DeleteObjectiveMutation, DeleteObjectiveMutationVariables>;
 export const GetObjectiveListDocument = gql`
     query GetObjectiveList {
   objectives {
