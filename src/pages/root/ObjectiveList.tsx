@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import {
   ObjectiveFieldFragmentDoc,
   useAddObjectiveMutation,
@@ -50,8 +51,9 @@ const ObjectForm = () => {
         },
       });
       reset({ title: "", objective_items: [] });
+      toast.success("目標を追加しました");
     } catch (error) {
-      alert("エラーが発生しました");
+      toast.error("エラーが発生しました");
     }
   });
   const [length, setLength] = useState([0, 0, 0]);

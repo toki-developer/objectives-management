@@ -3,6 +3,7 @@ import "/src/styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { apolloClient } from "src/apollo/apolloClient";
 
 const App = (props: AppProps) => {
@@ -13,6 +14,7 @@ const App = (props: AppProps) => {
   return (
     <ApolloProvider client={apolloClient}>
       <props.Component {...props.pageProps} />
+      <Toaster toastOptions={{ className: "!rounded-full !py-1 !px-2 !text-sm font-bold" }} />
     </ApolloProvider>
   );
 };
