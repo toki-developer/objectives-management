@@ -80,7 +80,7 @@ export const ObjectiveForm = () => {
           return (
             <div key={index}>
               <label className="flex items-center">
-                <span>{formItemInfoList[field.items_type].title}：</span>
+                <span className="text-xs"> - {formItemInfoList[field.items_type].title} -</span>
                 <input
                   {...register(`objective_items.${index}.title`)}
                   className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
