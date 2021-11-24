@@ -1,50 +1,49 @@
-import { gql } from "@apollo/client";
+import type { VFC } from "react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { ObjectiveFieldFragmentDoc, useAddObjectiveMutation } from "src/apollo/graphql";
 import { formItemInfoList } from "src/pages/root/utils";
 
-export const ObjectiveForm = () => {
-  const { control, register, handleSubmit, formState, reset } = useForm<{
-    title: string;
-    objective_items: { title: string; items_type: number }[];
-  }>();
+type Props = {
+  loading: boolean;
+  submitFunction: (data: ObjectiveFormType) => void;
+  initValue?: ObjectiveFormType;
+  initItemLength?: [number, number, number];
+  isEdit?: boolean;
+};
+
+export type ObjectiveFormType = {
+  title: string;
+  objectiveItems: { id: string; title: string; items_type: number }[];
+};
+
+export const ObjectiveForm: VFC<Props> = ({
+  loading,
+  submitFunction,
+  initValue,
+  initItemLength = [0, 0, 0],
+  isEdit,
+}) => {
+  const { control, register, handleSubmit, formState, reset, setValue } =
+    useForm<ObjectiveFormType>({
+      defaultValues: initValue,
+    });
   const { fields, insert, remove } = useFieldArray({
     control,
-    name: "objective_items",
+    name: "objectiveItems",
   });
-  const [addObjective, { loading }] = useAddObjectiveMutation({
-    update(cache, { data }) {
-      cache.modify({
-        fields: {
-          objectives(existingObjectiveRefs = []) {
-            const newObjectiveRef = cache.writeFragment({
-              data: data?.insert_objectives_one,
-              fragment: ObjectiveFieldFragmentDoc,
-              fragmentName: "ObjectiveField",
-            });
-            return [...existingObjectiveRefs, newObjectiveRef];
-          },
-        },
-      });
-    },
-  });
+
   const handleClick = handleSubmit(async (data) => {
     try {
-      await addObjective({
-        variables: {
-          title: data.title,
-          objective_items: { data: data.objective_items },
-        },
-      });
-      reset({ title: "", objective_items: [] });
-      toast.success("目標を追加しました");
+      await submitFunction(data);
+      reset({ title: "", objectiveItems: [] });
+      toast.success(`目標を${isEdit ? "更新" : "追加"}しました`);
     } catch (error) {
       toast.error("エラーが発生しました");
     }
   });
-  const [length, setLength] = useState([0, 0, 0]);
+
+  const [length, setLength] = useState(initItemLength);
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     const items_type = parseInt(e.currentTarget.value);
     const index = length.slice(0, items_type).reduce((prev, current) => {
@@ -60,7 +59,6 @@ export const ObjectiveForm = () => {
     setLength(length);
     remove(parseInt(index));
   };
-
   return (
     <div>
       <fieldset>
@@ -77,12 +75,13 @@ export const ObjectiveForm = () => {
           <p className="text-red-500 text-xs ml-2">※ {formState.errors.title?.message}</p>
         ) : null}
         {fields.map((field, index) => {
+          setValue(`objectiveItems.${index}.id`, field?.id);
           return (
             <div key={index}>
               <label className="flex items-center">
                 <span className="text-xs"> - {formItemInfoList[field.items_type].title} -</span>
                 <input
-                  {...register(`objective_items.${index}.title`)}
+                  {...register(`objectiveItems.${index}.title`)}
                   className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
                   placeholder={formItemInfoList[field.items_type].placeholder}
                 />
@@ -126,20 +125,9 @@ export const ObjectiveForm = () => {
           }`}
           disabled={loading}
         >
-          {loading ? "保存中" : "保存"}
+          {isEdit ? (loading ? "更新中" : "更新") : loading ? "保存中" : "保存"}
         </button>
       </div>
     </div>
   );
 };
-
-gql`
-  mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
-    insert_objectives_one(object: { title: $title, objective_items: $objective_items }) {
-      id
-    }
-  }
-`;
-
-// todo
-// objective_items_arr_rel_insert_inputを必要な型に修正

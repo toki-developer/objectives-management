@@ -1,8 +1,8 @@
 import { gql, useReactiveVar } from "@apollo/client";
 import { userVar } from "src/apollo/cache";
 import { useGetObjectiveListQuery } from "src/apollo/graphql";
+import { AddObjectiveForm } from "src/pages/root/AddObjectiveForm";
 import { Objective } from "src/pages/root/Objective";
-import { ObjectiveForm } from "src/pages/root/ObjectiveForm";
 
 export const ObjectiveList = () => {
   const loginUser = useReactiveVar(userVar);
@@ -11,7 +11,7 @@ export const ObjectiveList = () => {
   if (error) return <p>error</p>;
   return (
     <div>
-      <ObjectiveForm />
+      <AddObjectiveForm />
       {data?.objectives.map((objective) => {
         return <Objective objective={objective} key={objective.id} />;
       })}

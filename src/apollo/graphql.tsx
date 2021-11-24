@@ -1414,6 +1414,20 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type AddObjectiveMutationVariables = Exact<{
+  title: Scalars['String'];
+  objective_items?: Maybe<Objective_Items_Arr_Rel_Insert_Input>;
+}>;
+
+
+export type AddObjectiveMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_objectives_one?: Maybe<(
+    { __typename?: 'objectives' }
+    & Pick<Objectives, 'id'>
+  )> }
+);
+
 export type ObjectiveFieldFragment = (
   { __typename?: 'objectives' }
   & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
@@ -1468,17 +1482,31 @@ export type GetObjectiveListQuery = (
   )> }
 );
 
-export type AddObjectiveMutationVariables = Exact<{
+export type UpdateObjectiveMutationVariables = Exact<{
+  id: Scalars['uuid'];
   title: Scalars['String'];
-  objective_items?: Maybe<Objective_Items_Arr_Rel_Insert_Input>;
+  objects?: Maybe<Array<Objective_Items_Insert_Input> | Objective_Items_Insert_Input>;
+  delete_id?: Maybe<Array<Scalars['uuid']> | Scalars['uuid']>;
 }>;
 
 
-export type AddObjectiveMutation = (
+export type UpdateObjectiveMutation = (
   { __typename?: 'mutation_root' }
-  & { insert_objectives_one?: Maybe<(
+  & { update_objectives_by_pk?: Maybe<(
     { __typename?: 'objectives' }
     & Pick<Objectives, 'id'>
+  )>, insert_objective_items?: Maybe<(
+    { __typename?: 'objective_items_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'objective_items' }
+      & Pick<Objective_Items, 'id'>
+    )> }
+  )>, delete_objective_items?: Maybe<(
+    { __typename?: 'objective_items_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'objective_items' }
+      & Pick<Objective_Items, 'id'>
+    )> }
   )> }
 );
 
@@ -1511,6 +1539,42 @@ export const ObjectiveFieldFragmentDoc = gql`
   }
 }
     ${ObjectiveItemFieldFragmentDoc}`;
+export const AddObjectiveDocument = gql`
+    mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
+  insert_objectives_one(
+    object: {title: $title, objective_items: $objective_items}
+  ) {
+    id
+  }
+}
+    `;
+export type AddObjectiveMutationFn = Apollo.MutationFunction<AddObjectiveMutation, AddObjectiveMutationVariables>;
+
+/**
+ * __useAddObjectiveMutation__
+ *
+ * To run a mutation, you first call `useAddObjectiveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddObjectiveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addObjectiveMutation, { data, loading, error }] = useAddObjectiveMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      objective_items: // value for 'objective_items'
+ *   },
+ * });
+ */
+export function useAddObjectiveMutation(baseOptions?: Apollo.MutationHookOptions<AddObjectiveMutation, AddObjectiveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddObjectiveMutation, AddObjectiveMutationVariables>(AddObjectiveDocument, options);
+      }
+export type AddObjectiveMutationHookResult = ReturnType<typeof useAddObjectiveMutation>;
+export type AddObjectiveMutationResult = Apollo.MutationResult<AddObjectiveMutation>;
+export type AddObjectiveMutationOptions = Apollo.BaseMutationOptions<AddObjectiveMutation, AddObjectiveMutationVariables>;
 export const DeleteObjectiveDocument = gql`
     mutation DeleteObjective($id: uuid!) {
   delete_objectives_by_pk(id: $id) {
@@ -1578,39 +1642,52 @@ export function useGetObjectiveListLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetObjectiveListQueryHookResult = ReturnType<typeof useGetObjectiveListQuery>;
 export type GetObjectiveListLazyQueryHookResult = ReturnType<typeof useGetObjectiveListLazyQuery>;
 export type GetObjectiveListQueryResult = Apollo.QueryResult<GetObjectiveListQuery, GetObjectiveListQueryVariables>;
-export const AddObjectiveDocument = gql`
-    mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
-  insert_objectives_one(
-    object: {title: $title, objective_items: $objective_items}
-  ) {
+export const UpdateObjectiveDocument = gql`
+    mutation UpdateObjective($id: uuid!, $title: String!, $objects: [objective_items_insert_input!] = {}, $delete_id: [uuid!]) {
+  update_objectives_by_pk(pk_columns: {id: $id}, _set: {title: $title}) {
     id
+  }
+  insert_objective_items(
+    on_conflict: {constraint: objective_items_pkey, update_columns: title}
+    objects: $objects
+  ) {
+    returning {
+      id
+    }
+  }
+  delete_objective_items(where: {id: {_in: $delete_id}}) {
+    returning {
+      id
+    }
   }
 }
     `;
-export type AddObjectiveMutationFn = Apollo.MutationFunction<AddObjectiveMutation, AddObjectiveMutationVariables>;
+export type UpdateObjectiveMutationFn = Apollo.MutationFunction<UpdateObjectiveMutation, UpdateObjectiveMutationVariables>;
 
 /**
- * __useAddObjectiveMutation__
+ * __useUpdateObjectiveMutation__
  *
- * To run a mutation, you first call `useAddObjectiveMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddObjectiveMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateObjectiveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateObjectiveMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addObjectiveMutation, { data, loading, error }] = useAddObjectiveMutation({
+ * const [updateObjectiveMutation, { data, loading, error }] = useUpdateObjectiveMutation({
  *   variables: {
+ *      id: // value for 'id'
  *      title: // value for 'title'
- *      objective_items: // value for 'objective_items'
+ *      objects: // value for 'objects'
+ *      delete_id: // value for 'delete_id'
  *   },
  * });
  */
-export function useAddObjectiveMutation(baseOptions?: Apollo.MutationHookOptions<AddObjectiveMutation, AddObjectiveMutationVariables>) {
+export function useUpdateObjectiveMutation(baseOptions?: Apollo.MutationHookOptions<UpdateObjectiveMutation, UpdateObjectiveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddObjectiveMutation, AddObjectiveMutationVariables>(AddObjectiveDocument, options);
+        return Apollo.useMutation<UpdateObjectiveMutation, UpdateObjectiveMutationVariables>(UpdateObjectiveDocument, options);
       }
-export type AddObjectiveMutationHookResult = ReturnType<typeof useAddObjectiveMutation>;
-export type AddObjectiveMutationResult = Apollo.MutationResult<AddObjectiveMutation>;
-export type AddObjectiveMutationOptions = Apollo.BaseMutationOptions<AddObjectiveMutation, AddObjectiveMutationVariables>;
+export type UpdateObjectiveMutationHookResult = ReturnType<typeof useUpdateObjectiveMutation>;
+export type UpdateObjectiveMutationResult = Apollo.MutationResult<UpdateObjectiveMutation>;
+export type UpdateObjectiveMutationOptions = Apollo.BaseMutationOptions<UpdateObjectiveMutation, UpdateObjectiveMutationVariables>;

@@ -1,17 +1,17 @@
 import { gql } from "@apollo/client";
-import type { VFC } from "react";
+import { useState, VFC } from "react";
 import toast from "react-hot-toast";
 import {
   ObjectiveFieldFragment,
-  ObjectiveFieldFragmentDoc,
   ObjectiveItemFieldFragment,
   useDeleteObjectiveMutation,
 } from "src/apollo/graphql";
+import { UpdateObjectiveForm } from "src/pages/root/UpdateObjectiveForm";
 import { formItemInfoList } from "src/pages/root/utils";
 
 type Props = { objective: ObjectiveFieldFragment };
 
-type ObjectiveItemProps = {
+export type ObjectiveItemProps = {
   title: string;
   objectiveItemList: ObjectiveItemFieldFragment[];
 };
@@ -34,11 +34,16 @@ const ObjectiveItem: VFC<ObjectiveItemProps> = (props) => {
   );
 };
 
-type EditButtonProps = {};
+type EditButtonProps = {
+  setIsEdit: (v: boolean) => void;
+};
 
-const EditButton: VFC<EditButtonProps> = () => {
+const EditButton: VFC<EditButtonProps> = (props) => {
+  const handleEdit = () => {
+    props.setIsEdit(true);
+  };
   return (
-    <button>
+    <button onClick={handleEdit}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
@@ -108,19 +113,28 @@ const DeleteButton: VFC<DeleteButtonProps> = (props) => {
 };
 
 export const Objective: VFC<Props> = (props) => {
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   return (
     <div key={props.objective.id} className="border-t border-gray-600 mt-2 py-2">
-      <div>
-        <span className="text-gray-400">目標：</span>
-        <span className="text-xl text-white">{props.objective.title}</span>
-      </div>
-      <ObjectiveItem title="目的" objectiveItemList={props.objective.purpose_items} />
-      <ObjectiveItem title="行動" objectiveItemList={props.objective.action_items} />
-      <ObjectiveItem title="評価指標" objectiveItemList={props.objective.evaluation_items} />
-      <div className="flex justify-end space-x-2">
-        <EditButton />
-        <DeleteButton id={props.objective.id} />
-      </div>
+      {isEdit ? (
+        <>
+          <UpdateObjectiveForm setIsEdit={setIsEdit} objective={props.objective} />
+        </>
+      ) : (
+        <>
+          <div>
+            <span className="text-gray-400">目標：</span>
+            <span className="text-xl text-white">{props.objective.title}</span>
+          </div>
+          <ObjectiveItem title="目的" objectiveItemList={props.objective.purpose_items} />
+          <ObjectiveItem title="行動" objectiveItemList={props.objective.action_items} />
+          <ObjectiveItem title="評価指標" objectiveItemList={props.objective.evaluation_items} />
+          <div className="flex justify-end space-x-2">
+            <EditButton setIsEdit={setIsEdit} />
+            <DeleteButton id={props.objective.id} />
+          </div>
+        </>
+      )}
     </div>
   );
 };
