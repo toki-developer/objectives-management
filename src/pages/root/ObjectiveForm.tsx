@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import type { ReactNode, VFC } from "react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ type Props = {
   initValue?: ObjectiveFormType;
   initItemLength?: [number, number, number];
   isEdit?: boolean;
+  editCloseButton?: ReactNode;
 };
 
 export type ObjectiveFormType = {
@@ -23,6 +24,7 @@ export const ObjectiveForm: VFC<Props> = ({
   initValue,
   initItemLength = [0, 0, 0],
   isEdit,
+  editCloseButton,
 }) => {
   const { control, register, handleSubmit, formState, reset, setValue } =
     useForm<ObjectiveFormType>({
@@ -118,15 +120,18 @@ export const ObjectiveForm: VFC<Props> = ({
             + 評価指標
           </button>
         </div>
-        <button
-          onClick={handleClick}
-          className={`px-2 py-1 rounded-md w-20 ${
-            loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600"
-          }`}
-          disabled={loading}
-        >
-          {isEdit ? (loading ? "更新中" : "更新") : loading ? "保存中" : "保存"}
-        </button>
+        <div className="flex space-x-4 content-center">
+          {isEdit && editCloseButton}
+          <button
+            onClick={handleClick}
+            className={`px-2 py-1 rounded-md w-20 ${
+              loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600"
+            }`}
+            disabled={loading}
+          >
+            {isEdit ? (loading ? "更新中" : "更新") : loading ? "保存中" : "保存"}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -55,20 +55,36 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
     setIsEdit(false);
   };
   return (
-    <>
-      <ObjectiveForm
-        loading={loading}
-        submitFunction={onHandleUpdateObjective}
-        initValue={initValue}
-        initItemLength={[
-          objective.purpose_items.length,
-          objective.action_items.length,
-          objective.evaluation_items.length,
-        ]}
-        isEdit
-      />
-      <button onClick={handleCloseEdit}>更新取り消し</button>
-    </>
+    <ObjectiveForm
+      loading={loading}
+      submitFunction={onHandleUpdateObjective}
+      initValue={initValue}
+      initItemLength={[
+        objective.purpose_items.length,
+        objective.action_items.length,
+        objective.evaluation_items.length,
+      ]}
+      isEdit
+      editCloseButton={
+        <button onClick={handleCloseEdit} className="flex">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          更新取消
+        </button>
+      }
+    />
   );
 };
 
