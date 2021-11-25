@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { formItemInfoList } from "src/pages/root/utils";
+import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
 type Props = {
   loading: boolean;
@@ -35,7 +36,12 @@ export const ObjectiveForm: VFC<Props> = ({
     name: "objectiveItems",
   });
 
+  const requireLogin = useRequireLogin();
+
   const handleClick = handleSubmit(async (data) => {
+    if (requireLogin()) {
+      return;
+    }
     try {
       await submitFunction(data);
       reset({ title: "", objectiveItems: [] });
