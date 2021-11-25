@@ -2,6 +2,7 @@ import { gql, useReactiveVar } from "@apollo/client";
 import { userVar } from "src/apollo/cache";
 import type { ObjectiveFieldFragment } from "src/apollo/graphql";
 import { useGetObjectiveListQuery } from "src/apollo/graphql";
+import { LoadingIcon } from "src/components/Icon";
 import { RequireLoginMessage } from "src/components/Message";
 import { Objective } from "src/pages/root/Objective";
 
@@ -28,7 +29,7 @@ const NotLoggedObjective = () => {
 export const ObjectiveList = () => {
   const loginUser = useReactiveVar(userVar);
   const { data, loading, error } = useGetObjectiveListQuery({ skip: !loginUser });
-  if (loading) return <p>loading</p>;
+  if (loading) return <LoadingIcon />;
   if (error) return <p>error</p>;
   if (!loginUser) {
     return <NotLoggedObjective />;
