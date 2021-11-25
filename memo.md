@@ -1,6 +1,5 @@
 ## todo
 
-- vercel にデプロイ
 - Loading 中の UI 作る
 - Hasura を local に作る
 - error の UI 作る
