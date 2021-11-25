@@ -1431,13 +1431,7 @@ export type AddObjectiveMutation = (
 export type ObjectiveFieldFragment = (
   { __typename?: 'objectives' }
   & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
-  & { purpose_items: Array<(
-    { __typename?: 'objective_items' }
-    & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
-  )>, action_items: Array<(
-    { __typename?: 'objective_items' }
-    & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
-  )>, evaluation_items: Array<(
+  & { objective_items: Array<(
     { __typename?: 'objective_items' }
     & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
   )> }
@@ -1469,13 +1463,7 @@ export type GetObjectiveListQuery = (
   & { objectives: Array<(
     { __typename?: 'objectives' }
     & Pick<Objectives, 'id' | 'title' | 'sort_order' | 'finish_flg' | 'delete_flg'>
-    & { purpose_items: Array<(
-      { __typename?: 'objective_items' }
-      & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
-    )>, action_items: Array<(
-      { __typename?: 'objective_items' }
-      & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
-    )>, evaluation_items: Array<(
+    & { objective_items: Array<(
       { __typename?: 'objective_items' }
       & Pick<Objective_Items, 'id' | 'title' | 'items_type' | 'evaluation_type' | 'success_num' | 'failure_num' | 'finish_flg'>
     )> }
@@ -1528,13 +1516,7 @@ export const ObjectiveFieldFragmentDoc = gql`
   sort_order
   finish_flg
   delete_flg
-  purpose_items: objective_items(where: {items_type: {_eq: 1}}) {
-    ...ObjectiveItemField
-  }
-  action_items: objective_items(where: {items_type: {_eq: 2}}) {
-    ...ObjectiveItemField
-  }
-  evaluation_items: objective_items(where: {items_type: {_eq: 3}}) {
+  objective_items {
     ...ObjectiveItemField
   }
 }

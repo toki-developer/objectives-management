@@ -31,7 +31,6 @@ export const AddObjectiveForm = () => {
   return <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />;
 };
 
-// todo:objective_items_arr_rel_insert_inputを必要な型に修正
 gql`
   mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
     insert_objectives_one(object: { title: $title, objective_items: $objective_items }) {

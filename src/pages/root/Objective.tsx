@@ -1,13 +1,11 @@
 import { gql } from "@apollo/client";
-import { useState, VFC } from "react";
+import type { VFC } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import {
-  ObjectiveFieldFragment,
-  ObjectiveItemFieldFragment,
-  useDeleteObjectiveMutation,
-} from "src/apollo/graphql";
+import type { ObjectiveFieldFragment, ObjectiveItemFieldFragment } from "src/apollo/graphql";
+import { useDeleteObjectiveMutation } from "src/apollo/graphql";
 import { UpdateObjectiveForm } from "src/pages/root/UpdateObjectiveForm";
-import { formItemInfoList } from "src/pages/root/utils";
+import { formItemInfoList, separateByItemType } from "src/pages/root/utils";
 
 type Props = { objective: ObjectiveFieldFragment };
 
@@ -114,6 +112,7 @@ const DeleteButton: VFC<DeleteButtonProps> = (props) => {
 
 export const Objective: VFC<Props> = (props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [purpose, action, evaluation] = separateByItemType(props.objective.objective_items);
   return (
     <div key={props.objective.id} className="border-t border-gray-600 mt-2 py-2">
       {isEdit ? (
@@ -126,9 +125,9 @@ export const Objective: VFC<Props> = (props) => {
             <span className="text-gray-400">目標：</span>
             <span className="text-xl text-white">{props.objective.title}</span>
           </div>
-          <ObjectiveItem title="目的" objectiveItemList={props.objective.purpose_items} />
-          <ObjectiveItem title="行動" objectiveItemList={props.objective.action_items} />
-          <ObjectiveItem title="評価指標" objectiveItemList={props.objective.evaluation_items} />
+          <ObjectiveItem title="目的" objectiveItemList={purpose} />
+          <ObjectiveItem title="行動" objectiveItemList={action} />
+          <ObjectiveItem title="評価指標" objectiveItemList={evaluation} />
           <div className="flex justify-end space-x-2">
             <EditButton setIsEdit={setIsEdit} />
             <DeleteButton id={props.objective.id} />
@@ -146,13 +145,7 @@ gql`
     sort_order
     finish_flg
     delete_flg
-    purpose_items: objective_items(where: { items_type: { _eq: 1 } }) {
-      ...ObjectiveItemField
-    }
-    action_items: objective_items(where: { items_type: { _eq: 2 } }) {
-      ...ObjectiveItemField
-    }
-    evaluation_items: objective_items(where: { items_type: { _eq: 3 } }) {
+    objective_items {
       ...ObjectiveItemField
     }
   }

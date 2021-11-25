@@ -4,6 +4,7 @@ import type { ObjectiveFieldFragment } from "src/apollo/graphql";
 import { useUpdateObjectiveMutation } from "src/apollo/graphql";
 import type { ObjectiveFormType } from "src/pages/root/ObjectiveForm";
 import { ObjectiveForm } from "src/pages/root/ObjectiveForm";
+import { separateByItemType } from "src/pages/root/utils";
 
 type Props = {
   setIsEdit: (v: boolean) => void;
@@ -11,15 +12,23 @@ type Props = {
 };
 
 export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
-  const [updateObjective, { loading }] = useUpdateObjectiveMutation();
-  const objectiveItems = [
-    ...objective.purpose_items,
-    ...objective.action_items,
-    ...objective.evaluation_items,
-  ];
+  const [updateObjective, { loading }] = useUpdateObjectiveMutation({
+    update(cache, { data }) {
+      cache.modify({
+        id: cache.identify(objective),
+        fields: {
+          objective_items() {
+            return data?.insert_objective_items?.returning.map((item) => {
+              return { __ref: cache.identify(item) };
+            });
+          },
+        },
+      });
+    },
+  });
 
   const onHandleUpdateObjective = async (data: ObjectiveFormType) => {
-    const delete_ids = objectiveItems
+    const delete_ids = objective.objective_items
       .filter((prevItem) => {
         return (
           data.objectiveItems.filter((newItem) => {
@@ -49,21 +58,18 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
   };
   const initValue: ObjectiveFormType = {
     title: objective.title,
-    objectiveItems: objectiveItems,
+    objectiveItems: objective.objective_items,
   };
   const handleCloseEdit = () => {
     setIsEdit(false);
   };
+  const [purpose, action, evaluation] = separateByItemType(objective.objective_items);
   return (
     <ObjectiveForm
       loading={loading}
       submitFunction={onHandleUpdateObjective}
       initValue={initValue}
-      initItemLength={[
-        objective.purpose_items.length,
-        objective.action_items.length,
-        objective.evaluation_items.length,
-      ]}
+      initItemLength={[purpose.length, action.length, evaluation.length]}
       isEdit
       editCloseButton={
         <button onClick={handleCloseEdit} className="flex">
@@ -97,6 +103,7 @@ gql`
   ) {
     update_objectives_by_pk(pk_columns: { id: $id }, _set: { title: $title }) {
       id
+      title
     }
     insert_objective_items(
       on_conflict: { constraint: objective_items_pkey, update_columns: title }
@@ -104,6 +111,7 @@ gql`
     ) {
       returning {
         id
+        title
       }
     }
     delete_objective_items(where: { id: { _in: $delete_id } }) {
@@ -113,6 +121,3 @@ gql`
     }
   }
 `;
-
-// キャッシュの更新
-// titleがmaybeになる調査
