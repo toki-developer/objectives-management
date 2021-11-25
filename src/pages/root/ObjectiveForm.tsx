@@ -35,22 +35,6 @@ export const ObjectiveForm: VFC<Props> = ({
     control,
     name: "objectiveItems",
   });
-
-  const requireLogin = useRequireLogin();
-
-  const handleClick = handleSubmit(async (data) => {
-    if (requireLogin()) {
-      return;
-    }
-    try {
-      await submitFunction(data);
-      reset({ title: "", objectiveItems: [] });
-      toast.success(`目標を${isEdit ? "更新" : "追加"}しました`);
-    } catch (error) {
-      toast.error("エラーが発生しました");
-    }
-  });
-
   const [length, setLength] = useState(initItemLength);
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     const items_type = parseInt(e.currentTarget.value);
@@ -67,6 +51,22 @@ export const ObjectiveForm: VFC<Props> = ({
     setLength(length);
     remove(parseInt(index));
   };
+
+  const requireLogin = useRequireLogin();
+
+  const handleClick = handleSubmit(async (data) => {
+    if (requireLogin()) {
+      return;
+    }
+    try {
+      await submitFunction(data);
+      reset({ title: "", objectiveItems: [] });
+      toast.success(`目標を${isEdit ? "更新" : "追加"}しました`);
+    } catch (error) {
+      toast.error("エラーが発生しました");
+    }
+  });
+
   return (
     <div>
       <fieldset>

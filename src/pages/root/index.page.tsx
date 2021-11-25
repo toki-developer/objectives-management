@@ -1,12 +1,12 @@
 import { Layout } from "src/layout";
+import { AddObjectiveForm } from "src/pages/root/AddObjectiveForm";
 import { ObjectiveList } from "src/pages/root/ObjectiveList";
 
 const Home = () => {
   return (
     <Layout>
-      <div>
-        <ObjectiveList />
-      </div>
+      <AddObjectiveForm />
+      <ObjectiveList />
     </Layout>
   );
 };

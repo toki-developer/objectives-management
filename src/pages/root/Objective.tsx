@@ -14,14 +14,14 @@ export type ObjectiveItemProps = {
   objectiveItemList: ObjectiveItemFieldFragment[];
 };
 
-const ObjectiveItem: VFC<ObjectiveItemProps> = (props) => {
-  if (!props.objectiveItemList.length) return null;
+const ObjectiveItem: VFC<ObjectiveItemProps> = ({ objectiveItemList }) => {
+  if (!objectiveItemList.length) return null;
   return (
     <div className="ml-4 mt-2">
       <p className="text-xs text-gray-400">
-        {formItemInfoList[props.objectiveItemList[0].items_type].title}
+        {formItemInfoList[objectiveItemList[0].items_type].title}
       </p>
-      {props.objectiveItemList.map((item) => {
+      {objectiveItemList.map((item) => {
         return (
           <div key={item.id} className="mt-2">
             <p>- {item.title}</p>
@@ -36,9 +36,9 @@ type EditButtonProps = {
   setIsEdit: (v: boolean) => void;
 };
 
-const EditButton: VFC<EditButtonProps> = (props) => {
+const EditButton: VFC<EditButtonProps> = ({ setIsEdit }) => {
   const handleEdit = () => {
-    props.setIsEdit(true);
+    setIsEdit(true);
   };
   return (
     <button onClick={handleEdit}>
@@ -64,15 +64,15 @@ type DeleteButtonProps = {
   id: string;
 };
 
-const DeleteButton: VFC<DeleteButtonProps> = (props) => {
+const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
   const [deleteObjective] = useDeleteObjectiveMutation({
-    variables: { id: props.id },
+    variables: { id: id },
     update(cache) {
       cache.modify({
         fields: {
           objectives(existingObjectiveRefs, { readField }) {
             return existingObjectiveRefs.filter((objectiveRef: any) => {
-              return props.id !== readField("id", objectiveRef);
+              return id !== readField("id", objectiveRef);
             });
           },
         },
@@ -110,27 +110,27 @@ const DeleteButton: VFC<DeleteButtonProps> = (props) => {
   );
 };
 
-export const Objective: VFC<Props> = (props) => {
+export const Objective: VFC<Props> = ({ objective }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [purpose, action, evaluation] = separateByItemType(props.objective.objective_items);
+  const [purpose, action, evaluation] = separateByItemType(objective.objective_items);
   return (
-    <div key={props.objective.id} className="border-t border-gray-600 mt-2 py-2">
+    <div key={objective.id} className="border-t border-gray-600 mt-2 py-2">
       {isEdit ? (
         <>
-          <UpdateObjectiveForm setIsEdit={setIsEdit} objective={props.objective} />
+          <UpdateObjectiveForm setIsEdit={setIsEdit} objective={objective} />
         </>
       ) : (
         <>
           <div>
             <span className="text-gray-400">目標：</span>
-            <span className="text-xl text-white">{props.objective.title}</span>
+            <span className="text-xl text-white">{objective.title}</span>
           </div>
           <ObjectiveItem title="目的" objectiveItemList={purpose} />
           <ObjectiveItem title="行動" objectiveItemList={action} />
           <ObjectiveItem title="評価指標" objectiveItemList={evaluation} />
           <div className="flex justify-end space-x-2">
             <EditButton setIsEdit={setIsEdit} />
-            <DeleteButton id={props.objective.id} />
+            <DeleteButton id={objective.id} />
           </div>
         </>
       )}

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import type { VFC } from "react";
+import type { MouseEventHandler, VFC } from "react";
 import type { ObjectiveFieldFragment } from "src/apollo/graphql";
 import { useUpdateObjectiveMutation } from "src/apollo/graphql";
 import type { ObjectiveFormType } from "src/pages/root/ObjectiveForm";
@@ -9,6 +9,32 @@ import { separateByItemType } from "src/pages/root/utils";
 type Props = {
   setIsEdit: (v: boolean) => void;
   objective: ObjectiveFieldFragment;
+};
+
+type EditCloseButtonProps = {
+  handleCloseEdit: MouseEventHandler<HTMLButtonElement>;
+};
+
+const EditCloseButton: VFC<EditCloseButtonProps> = (props) => {
+  return (
+    <button onClick={props.handleCloseEdit} className="flex">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 mr-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+      更新取消
+    </button>
+  );
 };
 
 export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
@@ -60,7 +86,7 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
     title: objective.title,
     objectiveItems: objective.objective_items,
   };
-  const handleCloseEdit = () => {
+  const onHandleCloseEdit = () => {
     setIsEdit(false);
   };
   const [purpose, action, evaluation] = separateByItemType(objective.objective_items);
@@ -71,25 +97,7 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
       initValue={initValue}
       initItemLength={[purpose.length, action.length, evaluation.length]}
       isEdit
-      editCloseButton={
-        <button onClick={handleCloseEdit} className="flex">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-          更新取消
-        </button>
-      }
+      editCloseButton={<EditCloseButton handleCloseEdit={onHandleCloseEdit} />}
     />
   );
 };
