@@ -239,7 +239,7 @@ export type Objective_Items = {
   objective: Objectives;
   objective_id: Scalars['uuid'];
   success_num?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid'];
@@ -655,7 +655,7 @@ export type Objectives = {
   /** An aggregate relationship */
   objective_items_aggregate: Objective_Items_Aggregate;
   sort_order?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid'];
@@ -1494,12 +1494,12 @@ export type UpdateObjectiveMutation = (
   { __typename?: 'mutation_root' }
   & { update_objectives_by_pk?: Maybe<(
     { __typename?: 'objectives' }
-    & Pick<Objectives, 'id'>
+    & Pick<Objectives, 'id' | 'title'>
   )>, insert_objective_items?: Maybe<(
     { __typename?: 'objective_items_mutation_response' }
     & { returning: Array<(
       { __typename?: 'objective_items' }
-      & Pick<Objective_Items, 'id'>
+      & Pick<Objective_Items, 'id' | 'title'>
     )> }
   )>, delete_objective_items?: Maybe<(
     { __typename?: 'objective_items_mutation_response' }
@@ -1646,6 +1646,7 @@ export const UpdateObjectiveDocument = gql`
     mutation UpdateObjective($id: uuid!, $title: String!, $objects: [objective_items_insert_input!] = {}, $delete_id: [uuid!]) {
   update_objectives_by_pk(pk_columns: {id: $id}, _set: {title: $title}) {
     id
+    title
   }
   insert_objective_items(
     on_conflict: {constraint: objective_items_pkey, update_columns: title}
@@ -1653,6 +1654,7 @@ export const UpdateObjectiveDocument = gql`
   ) {
     returning {
       id
+      title
     }
   }
   delete_objective_items(where: {id: {_in: $delete_id}}) {
