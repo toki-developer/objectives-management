@@ -1,16 +1,13 @@
-import { supabase } from "src/utils/libs/initSupabase";
+import { useReactiveVar } from "@apollo/client";
+import { userVar } from "src/apollo/cache";
+import { useAuth } from "src/utils/hooks/useAuth";
 
 export const Header = () => {
-  const handleSignIn = () => {
-    supabase.auth.signIn({ provider: "google" });
-  };
-  const handleSignOut = () => {
-    supabase.auth.signOut();
-  };
-  const user = supabase.auth.user();
+  const { handleSignOut, handleSignIn } = useAuth();
+  const loginUser = useReactiveVar(userVar);
   return (
     <header className="text-right">
-      {user ? (
+      {loginUser ? (
         <button onClick={handleSignOut}>ログアウト</button>
       ) : (
         <button onClick={handleSignIn}>ログイン</button>

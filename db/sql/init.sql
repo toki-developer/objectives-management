@@ -38,7 +38,7 @@ create table objectives (
 
 create table objective_items (
   id uuid default uuid_generate_v1() primary key,
-  objective_id uuid references public.objectives not null,
+  objective_id uuid references public.objectives ON DELETE CASCADE not null,
   user_id uuid default auth.uid() references public.users not null,
   title text,
   success_num int default 0,
