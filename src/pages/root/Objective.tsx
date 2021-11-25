@@ -6,6 +6,7 @@ import type { ObjectiveFieldFragment, ObjectiveItemFieldFragment } from "src/apo
 import { useDeleteObjectiveMutation } from "src/apollo/graphql";
 import { UpdateObjectiveForm } from "src/pages/root/UpdateObjectiveForm";
 import { formItemInfoList, separateByItemType } from "src/pages/root/utils";
+import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
 type Props = { objective: ObjectiveFieldFragment };
 
@@ -36,6 +37,10 @@ type EditButtonProps = {
   setIsEdit: (v: boolean) => void;
 };
 
+type DeleteButtonProps = {
+  id: string;
+};
+
 const EditButton: VFC<EditButtonProps> = ({ setIsEdit }) => {
   const handleEdit = () => {
     setIsEdit(true);
@@ -60,11 +65,8 @@ const EditButton: VFC<EditButtonProps> = ({ setIsEdit }) => {
   );
 };
 
-type DeleteButtonProps = {
-  id: string;
-};
-
 const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
+  const requireLogin = useRequireLogin();
   const [deleteObjective] = useDeleteObjectiveMutation({
     variables: { id: id },
     update(cache) {
@@ -80,6 +82,9 @@ const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
     },
   });
   const handleDelete = async () => {
+    if (requireLogin()) {
+      return;
+    }
     if (!confirm("削除は取り消すことができません。本当に削除してもよろしいですか？")) {
       return;
     }

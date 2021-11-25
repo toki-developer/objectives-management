@@ -1,14 +1,9 @@
 import { useReactiveVar } from "@apollo/client";
 import { userVar } from "src/apollo/cache";
-import { supabase } from "src/utils/libs/initSupabase";
+import { useAuth } from "src/utils/hooks/useAuth";
 
 export const Header = () => {
-  const handleSignIn = () => {
-    supabase.auth.signIn({ provider: "google" });
-  };
-  const handleSignOut = () => {
-    supabase.auth.signOut();
-  };
+  const { handleSignOut, handleSignIn } = useAuth();
   const loginUser = useReactiveVar(userVar);
   return (
     <header className="text-right">
