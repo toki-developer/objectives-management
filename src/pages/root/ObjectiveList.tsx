@@ -11,11 +11,11 @@ const EXAMPLE_OBJECTIVE: ObjectiveFieldFragment = {
   id: 0,
   title: "目標の例です",
   objective_items: [
-    { id: 0, title: "目的のため", items_type: 1, evaluation_type: 0 },
-    { id: 0, title: "行動をする", items_type: 2, evaluation_type: 0 },
-    { id: 0, title: "行動をする", items_type: 2, evaluation_type: 0 },
+    { id: 1, title: "目的のため", items_type: 1, evaluation_type: 0 },
+    { id: 2, title: "行動をする", items_type: 2, evaluation_type: 0 },
+    { id: 3, title: "行動をする", items_type: 2, evaluation_type: 0 },
     {
-      id: 0,
+      id: 4,
       title: "評価指標を達成できたかどうか",
       items_type: 3,
       evaluation_type: 0,
