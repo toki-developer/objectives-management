@@ -2,7 +2,10 @@ import { gql } from "@apollo/client";
 import type { VFC } from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import type { ObjectiveFieldFragment, ObjectiveItemFieldFragment } from "src/apollo/graphql";
+import type {
+  ObjectiveFieldFragment,
+  ObjectiveItemFieldFragment,
+} from "src/apollo/graphql";
 import { useDeleteObjectiveMutation } from "src/apollo/graphql";
 import { UpdateObjectiveForm } from "src/pages/root/UpdateObjectiveForm";
 import { formItemInfoList, separateByItemType } from "src/pages/root/utils";
@@ -85,7 +88,11 @@ const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
     if (requireLogin()) {
       return;
     }
-    if (!confirm("削除は取り消すことができません。本当に削除してもよろしいですか？")) {
+    if (
+      !confirm(
+        "削除は取り消すことができません。本当に削除してもよろしいですか？"
+      )
+    ) {
       return;
     }
     try {
@@ -117,9 +124,11 @@ const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
 
 export const Objective: VFC<Props> = ({ objective }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [purpose, action, evaluation] = separateByItemType(objective.objective_items);
+  const [purpose, action, evaluation] = separateByItemType(
+    objective.objective_items
+  );
   return (
-    <div key={objective.id} className="border-t border-gray-600 mt-2 py-2">
+    <div className="border-t border-gray-600 mt-2 py-2">
       {isEdit ? (
         <>
           <UpdateObjectiveForm setIsEdit={setIsEdit} objective={objective} />

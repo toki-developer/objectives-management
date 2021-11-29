@@ -1,17 +1,14 @@
-import { useReactiveVar } from "@apollo/client";
-import { userVar } from "src/apollo/cache";
-import { useAuth } from "src/utils/hooks/useAuth";
+import { AuthButton } from "src/layout/Header";
 
 export const Header = () => {
-  const { handleSignOut, handleSignIn } = useAuth();
-  const loginUser = useReactiveVar(userVar);
   return (
-    <header className="text-right">
-      {loginUser ? (
-        <button onClick={handleSignOut}>ログアウト</button>
-      ) : (
-        <button onClick={handleSignIn}>ログイン</button>
-      )}
+    <header className="flex justify-between items-center border-b-2 py-2 border-gray-300">
+      <div>
+        <ul>
+          <li>目標管理</li>
+        </ul>
+      </div>
+      <AuthButton />
     </header>
   );
 };

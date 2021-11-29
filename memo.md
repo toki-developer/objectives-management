@@ -1,12 +1,7 @@
 ## todo
 
-- vercel にデプロイ
-- Loading 中の UI 作る
 - Hasura を local に作る
-- error の UI 作る
-- ログイン押したときにモーダルを表示してから。(Google で、を伝える)
 - 評価のタイプをつける(回数 割合)
-- 仮で Header を作る
 
 ## 機能メモ
 
