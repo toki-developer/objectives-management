@@ -38,7 +38,7 @@ export const ObjectiveList = () => {
     skip: !loginUser,
   });
   if (loading) return <SkeletonObjective />;
-  if (!error) return <Error />;
+  if (error) return <Error />;
   if (!loginUser) {
     return <NotLoggedObjective />;
   }
