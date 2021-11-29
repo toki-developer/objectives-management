@@ -1,4 +1,4 @@
-import { AuthButton } from "src/layout/Header/AuthButton";
+import { AuthButton } from "src/layout/Header";
 
 export const Header = () => {
   return (
