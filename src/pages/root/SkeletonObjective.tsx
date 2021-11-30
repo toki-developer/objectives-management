@@ -2,7 +2,7 @@ const SkeltonItem = () => {
   return (
     <div className="ml-4 mt-2">
       <div className="bg-gray-400 w-8 h-4"></div>
-      {[0, 2].map((index) => {
+      {[0, 1].map((index) => {
         return (
           <div key={index} className="mt-2">
             <div className="bg-gray-400 ml-4 w-1/2 h-5" />
