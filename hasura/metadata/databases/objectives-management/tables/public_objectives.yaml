@@ -1,0 +1,64 @@
+table:
+  name: objectives
+  schema: public
+object_relationships:
+- name: user
+  using:
+    foreign_key_constraint_on: user_id
+array_relationships:
+- name: objective_items
+  using:
+    foreign_key_constraint_on:
+      column: objective_id
+      table:
+        name: objective_items
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      user_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - id
+    - user_id
+    - title
+    - sort_order
+    - finish_flg
+    - delete_flg
+    set:
+      user_id: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - delete_flg
+    - finish_flg
+    - sort_order
+    - title
+    - id
+    - user_id
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: {}
+    columns:
+    - delete_flg
+    - finish_flg
+    - sort_order
+    - title
+    - id
+    - user_id
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
