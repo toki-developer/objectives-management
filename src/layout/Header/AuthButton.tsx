@@ -60,7 +60,7 @@ export const AuthButton = () => {
   ) : (
     <button
       onClick={handleSignIn}
-      className="space-x-1 border py-1 px-2 rounded-xl bg-white font-bold hover:bg-themeGray-1"
+      className="space-x-1 border py-1 px-2 rounded-xl bg-white text-black font-bold hover:bg-themeGray-1"
     >
       <LoginIcon />
       <span className="align-middle">ログイン</span>
