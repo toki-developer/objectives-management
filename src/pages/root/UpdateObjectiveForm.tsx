@@ -89,7 +89,7 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
   const onHandleCloseEdit = () => {
     setIsEdit(false);
   };
-  const [purpose, action, evaluation] = separateByItemType(
+  const [periodList, degreeList, purposeList, actionList, evaluationList] = separateByItemType(
     objective.objectiveItems
   );
   return (
@@ -97,7 +97,13 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
       loading={loading}
       submitFunction={onHandleUpdateObjective}
       initValue={initValue}
-      initItemLength={[purpose.length, action.length, evaluation.length]}
+      initItemLength={[
+        periodList.length,
+        degreeList.length,
+        purposeList.length,
+        actionList.length,
+        evaluationList.length,
+      ]}
       isEdit
       editCloseButton={<EditCloseButton handleCloseEdit={onHandleCloseEdit} />}
     />

@@ -124,9 +124,8 @@ const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
 
 export const Objective: VFC<Props> = ({ objective }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [purpose, action, evaluation] = separateByItemType(
-    objective.objectiveItems
-  );
+  const [periodList, degreeList, purposeList, actionList, evaluationList] =
+    separateByItemType(objective.objectiveItems);
   return (
     <div className="border-t border-themeGray-2 mt-2 py-2">
       {isEdit ? (
@@ -137,9 +136,11 @@ export const Objective: VFC<Props> = ({ objective }) => {
             <span className="text-themeGray-2">目標：</span>
             <span className="text-xl text-white">{objective.title}</span>
           </div>
-          <ObjectiveItem title="目的" objectiveItemList={purpose} />
-          <ObjectiveItem title="行動" objectiveItemList={action} />
-          <ObjectiveItem title="評価指標" objectiveItemList={evaluation} />
+          <ObjectiveItem title="期間" objectiveItemList={periodList} />
+          <ObjectiveItem title="程度" objectiveItemList={degreeList} />
+          <ObjectiveItem title="目的" objectiveItemList={purposeList} />
+          <ObjectiveItem title="行動" objectiveItemList={actionList} />
+          <ObjectiveItem title="評価指標" objectiveItemList={evaluationList} />
           <div className="flex justify-end space-x-2">
             <EditButton setIsEdit={setIsEdit} />
             <DeleteButton id={objective.id} />

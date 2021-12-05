@@ -9,7 +9,7 @@ type Props = {
   loading: boolean;
   submitFunction: (data: ObjectiveFormType) => void;
   initValue?: ObjectiveFormType;
-  initItemLength?: [number, number, number];
+  initItemLength?: [number, number, number, number, number];
   isEdit?: boolean;
   editCloseButton?: ReactNode;
 };
@@ -23,7 +23,7 @@ export const ObjectiveForm: VFC<Props> = ({
   loading,
   submitFunction,
   initValue,
-  initItemLength = [0, 0, 0],
+  initItemLength = [0, 0, 0, 0, 0],
   isEdit,
   editCloseButton,
 }) => {
@@ -128,12 +128,18 @@ export const ObjectiveForm: VFC<Props> = ({
       <div className="flex justify-between py-2">
         <div className="text-themeGray-2 space-x-4">
           <button onClick={handleAddForm} value="1">
-            + 目的
+            + 期間
           </button>
           <button onClick={handleAddForm} value="2">
-            + 行動
+            + 程度
           </button>
           <button onClick={handleAddForm} value="3">
+            + 目的
+          </button>
+          <button onClick={handleAddForm} value="4">
+            + 行動
+          </button>
+          <button onClick={handleAddForm} value="5">
             + 評価指標
           </button>
         </div>
