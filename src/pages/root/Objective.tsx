@@ -22,7 +22,7 @@ const ObjectiveItem: VFC<ObjectiveItemProps> = ({ objectiveItemList }) => {
   if (!objectiveItemList.length) return null;
   return (
     <div className="ml-4 mt-2">
-      <p className="text-xs text-gray-400">
+      <p className="text-xs text-themeGray-2">
         {formItemInfoList[objectiveItemList[0].itemsType].title}
       </p>
       {objectiveItemList.map((item) => {
@@ -128,15 +128,13 @@ export const Objective: VFC<Props> = ({ objective }) => {
     objective.objectiveItems
   );
   return (
-    <div className="border-t border-gray-600 mt-2 py-2">
+    <div className="border-t border-themeGray-2 mt-2 py-2">
       {isEdit ? (
-        <>
-          <UpdateObjectiveForm setIsEdit={setIsEdit} objective={objective} />
-        </>
+        <UpdateObjectiveForm setIsEdit={setIsEdit} objective={objective} />
       ) : (
         <>
           <div>
-            <span className="text-gray-400">目標：</span>
+            <span className="text-themeGray-2">目標：</span>
             <span className="text-xl text-white">{objective.title}</span>
           </div>
           <ObjectiveItem title="目的" objectiveItemList={purpose} />

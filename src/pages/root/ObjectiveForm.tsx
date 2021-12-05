@@ -79,7 +79,7 @@ export const ObjectiveForm: VFC<Props> = ({
               message: "1000文字以下で入力してください",
             },
           })}
-          className="bg-transparent border-b border-gray-600 p-2 w-full focus:outline-none"
+          className="bg-transparent border-b border-themeGray-3 p-2 w-full focus:outline-none"
           placeholder="目標はなに？"
         />
         {formState.errors.title ? (
@@ -98,7 +98,7 @@ export const ObjectiveForm: VFC<Props> = ({
                 </span>
                 <input
                   {...register(`objectiveItems.${index}.title`)}
-                  className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
+                  className="bg-transparent border-b border-themeGray-3 p-2 flex-auto focus:outline-none"
                   placeholder={formItemInfoList[field.itemsType].placeholder}
                 />
                 <button
@@ -126,7 +126,7 @@ export const ObjectiveForm: VFC<Props> = ({
         })}
       </fieldset>
       <div className="flex justify-between py-2">
-        <div className="text-gray-400 space-x-4">
+        <div className="text-themeGray-2 space-x-4">
           <button onClick={handleAddForm} value="1">
             + 目的
           </button>
