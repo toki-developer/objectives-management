@@ -23,7 +23,7 @@ const ObjectiveItem: VFC<ObjectiveItemProps> = ({ objectiveItemList }) => {
   return (
     <div className="ml-4 mt-2">
       <p className="text-xs text-gray-400">
-        {formItemInfoList[objectiveItemList[0].items_type].title}
+        {formItemInfoList[objectiveItemList[0].itemsType].title}
       </p>
       {objectiveItemList.map((item) => {
         return (
@@ -125,7 +125,7 @@ const DeleteButton: VFC<DeleteButtonProps> = ({ id }) => {
 export const Objective: VFC<Props> = ({ objective }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [purpose, action, evaluation] = separateByItemType(
-    objective.objective_items
+    objective.objectiveItems
   );
   return (
     <div className="border-t border-gray-600 mt-2 py-2">
@@ -156,28 +156,28 @@ gql`
   fragment ObjectiveField on objectives {
     id
     title
-    sort_order
-    finish_flg
-    delete_flg
-    objective_items {
+    sortOrder
+    finishFlg
+    deleteFlg
+    objectiveItems {
       ...ObjectiveItemField
     }
   }
 
-  fragment ObjectiveItemField on objective_items {
+  fragment ObjectiveItemField on objectiveItems {
     id
     title
-    items_type
-    evaluation_type
-    success_num
-    failure_num
-    finish_flg
+    itemsType
+    evaluationType
+    successNum
+    failureNum
+    finishFlg
   }
 `;
 
 gql`
   mutation DeleteObjective($id: uuid!) {
-    delete_objectives_by_pk(id: $id) {
+    deleteObjectivesByPk(id: $id) {
       id
     }
   }

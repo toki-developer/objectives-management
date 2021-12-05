@@ -44,7 +44,7 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
         id: cache.identify(objective),
         fields: {
           objective_items() {
-            return data?.insert_objective_items?.returning.map((item) => {
+            return data?.insertObjectiveItems?.returning.map((item) => {
               return { __ref: cache.identify(item) };
             });
           },
@@ -54,7 +54,7 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
   });
 
   const onHandleUpdateObjective = async (data: ObjectiveFormType) => {
-    const delete_ids = objective.objective_items
+    const deleteIds = objective.objectiveItems
       .filter((prevItem) => {
         return (
           data.objectiveItems.filter((newItem) => {
@@ -72,24 +72,26 @@ export const UpdateObjectiveForm: VFC<Props> = ({ setIsEdit, objective }) => {
         objects: data.objectiveItems.map((item) => {
           return {
             id: item.id,
-            objective_id: objective.id,
+            objectiveId: objective.id,
             title: item.title,
-            items_type: item.items_type,
+            itemsType: item.itemsType,
           };
         }),
-        delete_id: delete_ids,
+        deleteId: deleteIds,
       },
     });
     setIsEdit(false);
   };
   const initValue: ObjectiveFormType = {
     title: objective.title,
-    objectiveItems: objective.objective_items,
+    objectiveItems: objective.objectiveItems,
   };
   const onHandleCloseEdit = () => {
     setIsEdit(false);
   };
-  const [purpose, action, evaluation] = separateByItemType(objective.objective_items);
+  const [purpose, action, evaluation] = separateByItemType(
+    objective.objectiveItems
+  );
   return (
     <ObjectiveForm
       loading={loading}
@@ -106,14 +108,14 @@ gql`
   mutation UpdateObjective(
     $id: uuid!
     $title: String!
-    $objects: [objective_items_insert_input!] = {}
-    $delete_id: [uuid!]
+    $objects: [objectiveItems_insert_input!] = {}
+    $deleteId: [uuid!]
   ) {
-    update_objectives_by_pk(pk_columns: { id: $id }, _set: { title: $title }) {
+    updateObjectivesByPk(pk_columns: { id: $id }, _set: { title: $title }) {
       id
       title
     }
-    insert_objective_items(
+    insertObjectiveItems(
       on_conflict: { constraint: objective_items_pkey, update_columns: title }
       objects: $objects
     ) {
@@ -122,7 +124,7 @@ gql`
         title
       }
     }
-    delete_objective_items(where: { id: { _in: $delete_id } }) {
+    deleteObjectiveItems(where: { id: { _in: $deleteId } }) {
       returning {
         id
       }

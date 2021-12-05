@@ -9,13 +9,13 @@ export const formItemInfoList = [
 
 export const separateByItemType = (objectiveItems: ObjectiveItemFieldFragment[]) => {
   const purposeItems = objectiveItems.filter((item) => {
-    return item.items_type == 1;
+    return item.itemsType == 1;
   });
   const actionItems = objectiveItems.filter((item) => {
-    return item.items_type == 2;
+    return item.itemsType == 2;
   });
   const evaluationItems = objectiveItems.filter((item) => {
-    return item.items_type == 3;
+    return item.itemsType == 3;
   });
   return [purposeItems, actionItems, evaluationItems];
 };

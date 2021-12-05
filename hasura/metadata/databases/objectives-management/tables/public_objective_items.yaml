@@ -1,6 +1,19 @@
 table:
   name: objective_items
   schema: public
+configuration:
+  custom_column_names:
+    evaluation_type: evaluationType
+    failure_num: failureNum
+    finish_flg: finishFlg
+    items_type: itemsType
+    objective_id: objectiveId
+    success_num: successNum
+    user_id: userId
+  custom_name: objectiveItems
+  custom_root_fields:
+    delete: deleteObjectiveItems
+    insert: insertObjectiveItems
 object_relationships:
 - name: objective
   using:

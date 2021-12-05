@@ -1,12 +1,22 @@
 table:
   name: objectives
   schema: public
+configuration:
+  custom_column_names:
+    delete_flg: deleteFlg
+    finish_flg: finishFlg
+    sort_order: sortOrder
+    user_id: userId
+  custom_root_fields:
+    delete_by_pk: deleteObjectivesByPk
+    insert_one: insertObjectivesOne
+    update_by_pk: updateObjectivesByPk
 object_relationships:
 - name: user
   using:
     foreign_key_constraint_on: user_id
 array_relationships:
-- name: objective_items
+- name: objectiveItems
   using:
     foreign_key_constraint_on:
       column: objective_id

@@ -16,7 +16,7 @@ type Props = {
 
 export type ObjectiveFormType = {
   title: string;
-  objectiveItems: { id: string; title: string; items_type: number }[];
+  objectiveItems: { id: string; title: string; itemsType: number }[];
 };
 
 export const ObjectiveForm: VFC<Props> = ({
@@ -37,12 +37,12 @@ export const ObjectiveForm: VFC<Props> = ({
   });
   const [length, setLength] = useState(initItemLength);
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const items_type = parseInt(e.currentTarget.value);
-    const index = length.slice(0, items_type).reduce((prev, current) => {
+    const itemsType = parseInt(e.currentTarget.value);
+    const index = length.slice(0, itemsType).reduce((prev, current) => {
       return prev + current;
     });
-    insert(index, { title: "", items_type });
-    length[items_type - 1] += 1;
+    insert(index, { title: "", itemsType });
+    length[itemsType - 1] += 1;
     setLength(length);
   };
   const handleRemoveForm = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -74,26 +74,37 @@ export const ObjectiveForm: VFC<Props> = ({
           {...register("title", {
             required: { value: true, message: "入力必須です" },
             minLength: { value: 2, message: "2文字以上で入力してください" },
-            maxLength: { value: 1000, message: "1000文字以下で入力してください" },
+            maxLength: {
+              value: 1000,
+              message: "1000文字以下で入力してください",
+            },
           })}
           className="bg-transparent border-b border-gray-600 p-2 w-full focus:outline-none"
           placeholder="目標はなに？"
         />
         {formState.errors.title ? (
-          <p className="text-red-500 text-xs ml-2">※ {formState.errors.title?.message}</p>
+          <p className="text-red-500 text-xs ml-2">
+            ※ {formState.errors.title?.message}
+          </p>
         ) : null}
         {fields.map((field, index) => {
           setValue(`objectiveItems.${index}.id`, field?.id);
           return (
             <div key={index}>
               <label className="flex items-center">
-                <span className="text-xs"> - {formItemInfoList[field.items_type].title} -</span>
+                <span className="text-xs">
+                  {" "}
+                  - {formItemInfoList[field.itemsType].title} -
+                </span>
                 <input
                   {...register(`objectiveItems.${index}.title`)}
                   className="bg-transparent border-b border-gray-600 p-2 flex-auto focus:outline-none"
-                  placeholder={formItemInfoList[field.items_type].placeholder}
+                  placeholder={formItemInfoList[field.itemsType].placeholder}
                 />
-                <button onClick={handleRemoveForm} value={`${index},${field.items_type}`}>
+                <button
+                  onClick={handleRemoveForm}
+                  value={`${index},${field.itemsType}`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 mx-2"
@@ -135,7 +146,13 @@ export const ObjectiveForm: VFC<Props> = ({
             }`}
             disabled={loading}
           >
-            {isEdit ? (loading ? "更新中" : "更新") : loading ? "保存中" : "保存"}
+            {isEdit
+              ? loading
+                ? "更新中"
+                : "更新"
+              : loading
+              ? "保存中"
+              : "保存"}
           </button>
         </div>
       </div>
