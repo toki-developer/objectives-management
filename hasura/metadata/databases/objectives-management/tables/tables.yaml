@@ -1,0 +1,3 @@
+- "!include public_objective_items.yaml"
+- "!include public_objectives.yaml"
+- "!include public_users.yaml"

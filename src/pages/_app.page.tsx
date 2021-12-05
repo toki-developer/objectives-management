@@ -13,14 +13,18 @@ const App = (props: AppProps) => {
     supabase.auth.onAuthStateChange((_, session) => {
       userVar(session?.access_token);
     });
-    document.body.classList.add("bg-gray-900", "text-white");
+    document.body.classList.add("bg-themeGray-bg", "text-white");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ApolloProvider client={apolloClient}>
       <props.Component {...props.pageProps} />
-      <Toaster toastOptions={{ className: "!rounded-full !py-1 !px-2 !text-sm font-bold" }} />
+      <Toaster
+        toastOptions={{
+          className: "!rounded-full !py-1 !px-2 !text-sm font-bold",
+        }}
+      />
     </ApolloProvider>
   );
 };

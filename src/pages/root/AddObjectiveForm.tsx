@@ -1,5 +1,8 @@
 import { gql } from "@apollo/client";
-import { ObjectiveFieldFragmentDoc, useAddObjectiveMutation } from "src/apollo/graphql";
+import {
+  ObjectiveFieldFragmentDoc,
+  useAddObjectiveMutation,
+} from "src/apollo/graphql";
 import type { ObjectiveFormType } from "src/pages/root/ObjectiveForm";
 import { ObjectiveForm } from "src/pages/root/ObjectiveForm";
 
@@ -10,7 +13,7 @@ export const AddObjectiveForm = () => {
         fields: {
           objectives(existingObjectiveRefs = []) {
             const newObjectiveRef = cache.writeFragment({
-              data: data?.insert_objectives_one,
+              data: data?.insertObjectivesOne,
               fragment: ObjectiveFieldFragmentDoc,
               fragmentName: "ObjectiveField",
             });
@@ -24,16 +27,23 @@ export const AddObjectiveForm = () => {
     await addObjective({
       variables: {
         title: data.title,
-        objective_items: { data: data.objectiveItems },
+        objectiveItems: { data: data.objectiveItems },
       },
     });
   };
-  return <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />;
+  return (
+    <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />
+  );
 };
 
 gql`
-  mutation AddObjective($title: String!, $objective_items: objective_items_arr_rel_insert_input) {
-    insert_objectives_one(object: { title: $title, objective_items: $objective_items }) {
+  mutation AddObjective(
+    $title: String!
+    $objectiveItems: objectiveItems_arr_rel_insert_input
+  ) {
+    insertObjectivesOne(
+      object: { title: $title, objectiveItems: $objectiveItems }
+    ) {
       id
     }
   }

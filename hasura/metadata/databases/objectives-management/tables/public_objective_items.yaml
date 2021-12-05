@@ -1,0 +1,78 @@
+table:
+  name: objective_items
+  schema: public
+configuration:
+  custom_column_names:
+    evaluation_type: evaluationType
+    failure_num: failureNum
+    finish_flg: finishFlg
+    items_type: itemsType
+    objective_id: objectiveId
+    success_num: successNum
+    user_id: userId
+  custom_name: objectiveItems
+  custom_root_fields:
+    delete: deleteObjectiveItems
+    insert: insertObjectiveItems
+object_relationships:
+- name: objective
+  using:
+    foreign_key_constraint_on: objective_id
+- name: user
+  using:
+    foreign_key_constraint_on: user_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      user_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - evaluation_type
+    - failure_num
+    - finish_flg
+    - id
+    - items_type
+    - objective_id
+    - success_num
+    - title
+    - user_id
+    set:
+      user_id: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - id
+    - objective_id
+    - user_id
+    - title
+    - success_num
+    - failure_num
+    - finish_flg
+    - evaluation_type
+    - items_type
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: {}
+    columns:
+    - evaluation_type
+    - failure_num
+    - finish_flg
+    - items_type
+    - success_num
+    - title
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user

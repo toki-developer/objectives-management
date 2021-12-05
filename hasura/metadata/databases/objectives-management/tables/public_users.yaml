@@ -1,0 +1,18 @@
+table:
+  name: users
+  schema: public
+array_relationships:
+- name: objective_items
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: objective_items
+        schema: public
+- name: objectives
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: objectives
+        schema: public
