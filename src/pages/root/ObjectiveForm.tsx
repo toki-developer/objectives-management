@@ -2,6 +2,7 @@ import type { ReactNode, VFC } from "react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Button } from "src/components/Button";
 import { formItemInfoList } from "src/pages/root/utils";
 import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
@@ -145,12 +146,11 @@ export const ObjectiveForm: VFC<Props> = ({
         </div>
         <div className="flex space-x-4 content-center">
           {isEdit && editCloseButton}
-          <button
+          <Button
             onClick={handleClick}
-            className={`px-2 py-1 rounded-md w-20 ${
-              loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600"
-            }`}
+            className="w-20"
             disabled={loading}
+            variant="solid-green"
           >
             {isEdit
               ? loading
@@ -159,7 +159,7 @@ export const ObjectiveForm: VFC<Props> = ({
               : loading
               ? "保存中"
               : "保存"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
