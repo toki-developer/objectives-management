@@ -8,7 +8,7 @@ import {
 import { Button } from "src/components/Button";
 import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
-export const CompleteButtons = ({ id }: { id: string }) => {
+export const AchieveButtons = ({ id }: { id: string }) => {
   const requireLogin = useRequireLogin();
   const [AchievedObjective, { loading: achievedLoading }] =
     useAchievedObjectiveMutation({

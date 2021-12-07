@@ -6,7 +6,7 @@ import type {
   ObjectiveItemFieldFragment,
 } from "src/apollo/graphql";
 import {
-  CompleteButtons,
+  AchieveButtons,
   DeleteButton,
   EditButton,
 } from "src/pages/root/Objective/ObjectiveButton";
@@ -53,7 +53,7 @@ export const Objective: VFC<Props> = ({ objective }) => {
               <span className="text-themeGray-2">目標：</span>
               <span className="text-xl text-white">{objective.title}</span>
             </div>
-            <CompleteButtons id={objective.id} />
+            <AchieveButtons id={objective.id} />
           </div>
           <ObjectiveItem title="期間" objectiveItemList={periodList} />
           <ObjectiveItem title="程度" objectiveItemList={degreeList} />
