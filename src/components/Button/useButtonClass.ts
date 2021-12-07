@@ -13,6 +13,8 @@ export const useButtonClass = (
           ? "bg-green-600 text-white hover:bg-green-500"
           : variant === "solid-white"
           ? "bg-white text-black hover:bg-themeGray-1"
+          : variant === "outline"
+          ? "border border-white hover:bg-themeGray-3"
           : ""
       }
       ${className}

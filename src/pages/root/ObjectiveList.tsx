@@ -87,7 +87,7 @@ export const ObjectiveList = () => {
 
 gql`
   query GetObjectiveList {
-    objectives {
+    objectives(where: { finishFlg: { _eq: 0 } }) {
       ...ObjectiveField
     }
   }
