@@ -43,7 +43,7 @@ export const Objective: VFC<Props> = ({ objective }) => {
   const [periodList, degreeList, purposeList, actionList, evaluationList] =
     separateByItemType(objective.objectiveItems);
   return (
-    <div className="border-b border-themeGray-2 mt-2 py-2">
+    <div className="border-b border-themeGray-2 my-2 p-2">
       {isEdit ? (
         <UpdateObjectiveForm setIsEdit={setIsEdit} objective={objective} />
       ) : (

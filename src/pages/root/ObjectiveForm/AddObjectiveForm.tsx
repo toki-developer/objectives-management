@@ -32,7 +32,7 @@ export const AddObjectiveForm = () => {
     });
   };
   return (
-    <div className="border-b border-themeGray-2 mt-2 py-2">
+    <div className="border-b border-themeGray-2 my-2 p-2">
       <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />
     </div>
   );

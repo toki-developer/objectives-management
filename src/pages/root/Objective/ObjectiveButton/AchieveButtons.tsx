@@ -2,16 +2,16 @@ import { gql } from "@apollo/client";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import {
-  useAchievedObjectiveMutation,
-  useFailedObjectiveMutation,
+  useAchieveObjectiveMutation,
+  useFaileObjectiveMutation,
 } from "src/apollo/graphql";
 import { Button } from "src/components/Button";
 import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
 export const AchieveButtons = ({ id }: { id: string }) => {
   const requireLogin = useRequireLogin();
-  const [AchievedObjective, { loading: achievedLoading }] =
-    useAchievedObjectiveMutation({
+  const [achieveObjective, { loading: achievedLoading }] =
+    useAchieveObjectiveMutation({
       variables: { id },
       update(cache) {
         cache.modify({
@@ -30,14 +30,14 @@ export const AchieveButtons = ({ id }: { id: string }) => {
       return;
     }
     try {
-      await AchievedObjective();
+      await achieveObjective();
       toast.success(`目標を達成にしました`);
     } catch (error) {
       toast.error("エラーが発生しました");
     }
-  }, [requireLogin, AchievedObjective]);
-  const [FailedObjective, { loading: failedLoading }] =
-    useFailedObjectiveMutation({
+  }, [requireLogin, achieveObjective]);
+  const [faileObjective, { loading: failedLoading }] =
+    useFaileObjectiveMutation({
       variables: { id },
       update(cache) {
         cache.modify({
@@ -56,12 +56,12 @@ export const AchieveButtons = ({ id }: { id: string }) => {
       return;
     }
     try {
-      await FailedObjective();
+      await faileObjective();
       toast.success(`目標を未達にしました`);
     } catch (error) {
       toast.error("エラーが発生しました");
     }
-  }, [requireLogin, FailedObjective]);
+  }, [requireLogin, faileObjective]);
 
   return (
     <div className="space-x-2 flex-none">
@@ -84,12 +84,12 @@ export const AchieveButtons = ({ id }: { id: string }) => {
 };
 
 gql`
-  mutation AchievedObjective($id: uuid!) {
+  mutation AchieveObjective($id: uuid!) {
     updateObjectivesByPk(pk_columns: { id: $id }, _set: { finishFlg: 1 }) {
       id
     }
   }
-  mutation FailedObjective($id: uuid!) {
+  mutation FaileObjective($id: uuid!) {
     updateObjectivesByPk(pk_columns: { id: $id }, _set: { finishFlg: 2 }) {
       id
     }
