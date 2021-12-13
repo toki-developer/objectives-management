@@ -12,6 +12,7 @@ export const Layout: VFC<Props> = (props) => {
     <div className="max-w-4xl mx-auto w-full px-4 space-y-4">
       <Header />
       <main>{children}</main>
+      <div className="h-10" />
     </div>
   );
 };

@@ -9,15 +9,49 @@ import { SkeletonObjective } from "src/pages/root/SkeletonObjective";
 
 const EXAMPLE_OBJECTIVE: ObjectiveFieldFragment = {
   id: 0,
-  title: "目標の例です",
+  title: "例 ) DB設計のスキルをつける",
   objectiveItems: [
-    { id: 1, title: "目的のため", itemsType: 1, evaluationType: 0 },
-    { id: 2, title: "行動をする", itemsType: 2, evaluationType: 0 },
-    { id: 3, title: "行動をする", itemsType: 2, evaluationType: 0 },
+    { id: 1, title: "半年後まで", itemsType: 1, evaluationType: 0 },
+    {
+      id: 2,
+      title: "基本的なものなら設計できて、アンチパターンを踏まないレベル",
+      itemsType: 2,
+      evaluationType: 0,
+    },
+    {
+      id: 3,
+      title: "パフォーマンスやより良い書き方などよりも手前のレベル",
+      itemsType: 2,
+      evaluationType: 0,
+    },
     {
       id: 4,
-      title: "評価指標を達成できたかどうか",
+      title: "DB設計を課題に感じているため",
       itemsType: 3,
+      evaluationType: 0,
+    },
+    {
+      id: 5,
+      title: "DB設計はアプリ作りにおいて根底になる大切な要素であるため",
+      itemsType: 3,
+      evaluationType: 0,
+    },
+    {
+      id: 6,
+      title: "DB設計のタスクを求め、開発の機会を増やし、レビューをもらう",
+      itemsType: 4,
+      evaluationType: 0,
+    },
+    {
+      id: 7,
+      title: "DB設計に関する本を読む",
+      itemsType: 4,
+      evaluationType: 0,
+    },
+    {
+      id: 8,
+      title: "明らかな間違いなく、基本的なものが1人で設計できるかどうか",
+      itemsType: 5,
       evaluationType: 0,
     },
   ],
@@ -53,7 +87,7 @@ export const ObjectiveList = () => {
 
 gql`
   query GetObjectiveList {
-    objectives {
+    objectives(where: { finishFlg: { _eq: 0 } }) {
       ...ObjectiveField
     }
   }

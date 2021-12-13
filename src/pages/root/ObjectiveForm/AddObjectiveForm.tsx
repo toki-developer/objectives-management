@@ -3,8 +3,8 @@ import {
   ObjectiveFieldFragmentDoc,
   useAddObjectiveMutation,
 } from "src/apollo/graphql";
-import type { ObjectiveFormType } from "src/pages/root/ObjectiveForm";
-import { ObjectiveForm } from "src/pages/root/ObjectiveForm";
+import type { ObjectiveFormType } from "src/pages/root/ObjectiveForm/ObjectiveForm";
+import { ObjectiveForm } from "src/pages/root/ObjectiveForm/ObjectiveForm";
 
 export const AddObjectiveForm = () => {
   const [addObjective, { loading }] = useAddObjectiveMutation({
@@ -32,7 +32,9 @@ export const AddObjectiveForm = () => {
     });
   };
   return (
-    <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />
+    <div className="border-b border-themeGray-2 my-2 p-2">
+      <ObjectiveForm loading={loading} submitFunction={onHandleAddObjective} />
+    </div>
   );
 };
 

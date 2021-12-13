@@ -2,6 +2,7 @@ import type { ReactNode, VFC } from "react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Button } from "src/components/Button";
 import { formItemInfoList } from "src/pages/root/utils";
 import { useRequireLogin } from "src/utils/hooks/useRequireLogin";
 
@@ -9,7 +10,7 @@ type Props = {
   loading: boolean;
   submitFunction: (data: ObjectiveFormType) => void;
   initValue?: ObjectiveFormType;
-  initItemLength?: [number, number, number];
+  initItemLength?: [number, number, number, number, number];
   isEdit?: boolean;
   editCloseButton?: ReactNode;
 };
@@ -23,7 +24,7 @@ export const ObjectiveForm: VFC<Props> = ({
   loading,
   submitFunction,
   initValue,
-  initItemLength = [0, 0, 0],
+  initItemLength = [0, 0, 0, 0, 0],
   isEdit,
   editCloseButton,
 }) => {
@@ -128,23 +129,28 @@ export const ObjectiveForm: VFC<Props> = ({
       <div className="flex justify-between py-2">
         <div className="text-themeGray-2 space-x-4">
           <button onClick={handleAddForm} value="1">
-            + 目的
+            + 期間
           </button>
           <button onClick={handleAddForm} value="2">
-            + 行動
+            + 程度
           </button>
           <button onClick={handleAddForm} value="3">
+            + 目的
+          </button>
+          <button onClick={handleAddForm} value="4">
+            + 行動
+          </button>
+          <button onClick={handleAddForm} value="5">
             + 評価指標
           </button>
         </div>
         <div className="flex space-x-4 content-center">
           {isEdit && editCloseButton}
-          <button
+          <Button
             onClick={handleClick}
-            className={`px-2 py-1 rounded-md w-20 ${
-              loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600"
-            }`}
+            className="w-20"
             disabled={loading}
+            variant="solid-green"
           >
             {isEdit
               ? loading
@@ -153,7 +159,7 @@ export const ObjectiveForm: VFC<Props> = ({
               : loading
               ? "保存中"
               : "保存"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { Layout } from "src/layout";
-import { AddObjectiveForm } from "src/pages/root/AddObjectiveForm";
+import { FinishedContent } from "src/pages/root/FinishedContent";
+import { AddObjectiveForm } from "src/pages/root/ObjectiveForm";
 import { ObjectiveList } from "src/pages/root/ObjectiveList";
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     <Layout>
       <AddObjectiveForm />
       <ObjectiveList />
+      <FinishedContent />
     </Layout>
   );
 };

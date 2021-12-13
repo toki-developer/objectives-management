@@ -1,5 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import { userVar } from "src/apollo/cache";
+import { Button } from "src/components/Button";
 import { useAuth } from "src/utils/hooks/useAuth";
 
 const LoginIcon = () => {
@@ -58,12 +59,13 @@ export const AuthButton = () => {
       <span className="align-middle">ログアウト</span>
     </button>
   ) : (
-    <button
+    <Button
       onClick={handleSignIn}
-      className="space-x-1 border py-1 px-2 rounded-xl bg-white font-bold hover:bg-themeGray-1"
+      className="space-x-1 flex"
+      variant="solid-white"
     >
       <LoginIcon />
       <span className="align-middle">ログイン</span>
-    </button>
+    </Button>
   );
 };
